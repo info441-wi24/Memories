@@ -1,1 +1,1 @@
-# group-project-jam860
+# Photo Album Application (Memories)
