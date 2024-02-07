@@ -1,4 +1,5 @@
-# Project Proposal
+# Group 2's Project Proposal
+By: James Nguyen, Sunghee Park, Roberto Raftery, Yan Remes
 
 # Project Description
 ## Who is our target audience?
