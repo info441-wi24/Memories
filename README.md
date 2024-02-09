@@ -58,19 +58,23 @@ GET /album/:id - Allows users to view a specific photo album depending on an ID.
 
 ## Database Schemas:
 - Users
-    * UserID (Number)
-    * Biography (String)
+    * userID (Number)
+    * biography (String)
 - Photo Albums
-    * UserID (Number)
-    * AlbumID (Number)
-    * Title (String)
-    * Description (String)
-    * Photos (Array of Blob Links)
-    * Number of Likes (Number)
-    * People who liked (Array of Strings)
-    * Comments (Array of Objects {Commenter (String) and Comment (String)})
-    * Number of Comments (Number)
-    * Tags (Array of Strings)
+    * userID (Number)
+    * albumID (Number)
+    * title (String)
+    * description (String)
+    * photos (Array of Blob Links)
+    * likes (Array of Strings)
+    * tags (Array of Strings)
+    * created_date (Date)
+- Comments
+    * userID (Number)
+    * comment (String)
+    * photo_album (object id of an Album)
+    * created_date (Date)
+ 
 
 
 
