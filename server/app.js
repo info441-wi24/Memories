@@ -5,6 +5,7 @@ import logger from 'morgan';
 import models from './models.js';
 
 import usersRouter from './routes/users.js';
+import apiRouter from './routes/api.js';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -25,7 +26,9 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/api/users', usersRouter); 
+app.use('/api', apiRouter);
+
+// app.use('/api/users', usersRouter); 
 
 app.get('/api', (req, res) => {
     res.send("testing this");

@@ -1,12 +1,13 @@
-import Users from './components/User';
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import Home from './components/Home';
+
 
 function App() {
   return (
     <>
       <Routes>
-        <Route index element={<Users />} />
+        <Route index element={<Home />} />
       </Routes>
     </>
   );
