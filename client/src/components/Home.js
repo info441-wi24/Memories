@@ -22,7 +22,7 @@ export default function Users(props) {
 
     return (
         <div className='justify-content-center'>
-            <h1>This is the homescreen!</h1>
+            <h1 className='text-center'>This is the homescreen!</h1>
             <ul>
                 {userInfo}
             </ul>
