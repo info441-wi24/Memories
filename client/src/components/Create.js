@@ -1,11 +1,13 @@
 import { useState } from "react"
 import { useEffect } from "react";
+import { useRef } from 'react';
 
 export default function Create() {
     const [albumName, setAlbumName] = useState("");
     const [albumDescription, setAlbumDescription] = useState("");
     const [photos, setPhotos] = useState([]);
     const [previewUrls, setPreviewUrl] = useState([]);
+    const aRef = useRef(null); //reference to file input;
 
     useEffect(() => {
         if (!photos || photos.length === 0) {
@@ -47,13 +49,21 @@ export default function Create() {
     }
 
     function submitAction(event) {
-        const formData = new FormData();
         event.preventDefault();
+        event.stopPropagation();
+        const formData = new FormData();
 
-        fetch("api/album/create", {
+
+        fetch("api/albums/create", {
             method: "POST",
             body: { albumName: albumName, albumDescription: albumDescription, photos: photos }
         });
+
+        setPreviewUrl([]);
+        setPhotos([]);
+        setAlbumName("");
+        setAlbumDescription("");
+        aRef.current.value = null;
     }
 
 
@@ -62,24 +72,22 @@ export default function Create() {
             <h1 className="mt-4 mb-5">Create New Album</h1>
             <div className="createBox d-flex mb-5">
                 <div>
-
-                    <form>
+                    <form onSubmit={submitAction}>
                         <div className="mb-3">
                             <label htmlFor="albumName" className="form-label">Photo Album Name</label>
-                            <input type="text" className="form-control" onChange={albumNameChange} value={albumName} placeholder="Kyoto Adventures" />
+                            <input type="text" className="form-control" onChange={albumNameChange} value={albumName} placeholder="Kyoto Adventures" required/>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="albumDescription" className="form-label">Photo Album Description</label>
-                            <input type="text" className="form-control" onChange={albumDescriptionChange} value={albumDescription} />
+                            <input type="text" className="form-control" onChange={albumDescriptionChange} value={albumDescription} required/>
                         </div>
                         <div>
                             <label htmlFor="fileUpload" className="form-label">Upload Photos</label>
                         </div>
                         <div className="mb-3">
-                            <input type="file" className="form-control-file" onChange={photosChange} accept="image/*" multiple />
+                            <input ref={aRef} type="file" className="form-control-file" onChange={photosChange} accept="image/*" multiple required/>
                         </div>
-
-                        <button type="submit" onSubmit={submitAction} className="btn btn-primary">Submit</button>
+                        <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
@@ -90,8 +98,8 @@ export default function Create() {
                 <div className="row">
                     {previewUrls && previewUrls.map((url, index) => {
                         return (
-                            <div className="col-4 mt-4 mb-4">
-                                <img className="imgPreview" key={index} src={url} alt="preview" />
+                            <div key={index} className="col-4 mt-4 mb-4">
+                                <img className="imgPreview" src={url} alt="preview" />
                             </div>
                         );
                     })}

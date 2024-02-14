@@ -18,6 +18,11 @@ router.get('/view', (req, res) => {
 
 //create a new album
 router.post('/create', (req, res) => {
+  console.log("hey");
+
+  //create client blob beforehand in models, attach blob connection to models, use middleware to help read files, then upload to database
+  //once uploaded, return successful
+
 
 })
 
