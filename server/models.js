@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 let models = {}
 
 await mongoose.connect("mongodb+srv://jnguyen860:12345678a@memories.hqiftv7.mongodb.net/memories");
+  
 
 const userSchema = mongoose.Schema({
     username: String,
@@ -11,22 +12,22 @@ const userSchema = mongoose.Schema({
 
 const albumSchema = mongoose.Schema({
     // username: String,
-    title: String,
+    name: String,
     description: String,
     photos: [String],
     likes: [String],
-    created_date: Date,
+    uploadDate: { type: Date, default: Date.now }
 });
 
 const commentSchema = mongoose.Schema({
     username: String,
     comment: String,
     album: {type: mongoose.Schema.Types.ObjectId, ref: "Album"},
-    created_date: Date
+    uploadDate: { type: Date, default: Date.now }
 });
 
-models.Post = mongoose.model("User", userSchema);
-models.Comment = mongoose.model("Album", albumSchema);
-models.UserInfo = mongoose.model("Comment", commentSchema);
+models.User = mongoose.model("User", userSchema);
+models.Album = mongoose.model("Album", albumSchema);
+models.Comment = mongoose.model("Comment", commentSchema);
 
 export default models;

@@ -52,11 +52,16 @@ export default function Create() {
         event.preventDefault();
         event.stopPropagation();
         const formData = new FormData();
+        formData.append('albumName', albumName);
+        formData.append('albumDescription', albumDescription);
+        photos.forEach((photo, index) => {
+            formData.append(`photo${index}`, photo);
+        })
 
 
         fetch("api/albums/create", {
             method: "POST",
-            body: { albumName: albumName, albumDescription: albumDescription, photos: photos }
+            body: formData
         });
 
         setPreviewUrl([]);

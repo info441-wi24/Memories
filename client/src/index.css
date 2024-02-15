@@ -7,6 +7,11 @@
   max-height: 400px;
 }
 
+.img-test {
+  max-width: 200px;
+  max-height: auto;
+}
+
 .createBox {
   gap: 24px;
 }
