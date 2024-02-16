@@ -7,11 +7,11 @@ export default function HomeCard(props) {
     console.log(props.album._id);
 
     return (
-        <div class="card img-test">
-            <img src={props.album.photos[0]} class="card-img-top" alt="album thumbnail"/>
-                <div class="card-body">
-                    <h5 class="card-title">{props.album.name}</h5>
-                    <p class="card-text">{props.album.description}</p>
+        <div className="card img-test">
+            <img src={props.album.photos[0]} className="card-img-top" alt="album thumbnail"/>
+                <div className="card-body">
+                    <h5 className="card-title">{props.album.name}</h5>
+                    <p className="card-text">{props.album.description}</p>
                     <Link to={"/album/" + props.album._id} className="btn btn-primary" album={props.album}>Open</Link>
                 </div>
         </div>

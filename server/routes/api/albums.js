@@ -4,6 +4,7 @@ var router = express.Router();
 import multer from 'multer';
 import MulterAzureStorage from 'multer-azure-storage';
 import { BlobServiceClient } from '@azure/storage-blob';
+import { model } from 'mongoose';
 
 // Set up Azure Blob Storage
 const connectionString = 'DefaultEndpointsProtocol=https;AccountName=info441photoalbum;AccountKey=I4btGGARHrjyqEIzQk2jREkKn854kdsTtjzCIzCs9Az8T4iXtWhwUsEXU8tsEgQNt4/xeqo8voZc+AStlwxsYA==;EndpointSuffix=core.windows.net';
@@ -64,6 +65,34 @@ router.get("/view", async (req, res) => {
   }
 
 });
+
+router.post("/comment", async (req, res) => {
+  try {
+    let newComment = new req.models.Comment({
+        username: "unknown",
+        comment: req.body.comment,
+        album: req.body.album,
+    });
+    await newComment.save();
+    res.json({status: "success"}).status(201);
+  } catch (error) {
+    res.json({status: "error"}).status(500);
+    console.log(error);
+  }
+});
+
+router.get("/comment", async (req, res) => {
+  let albumID = req.query.id;
+  try {
+    let comments = await req.models.Comment.find({
+      album: albumID
+    });
+    res.json(comments).status(201);
+  } catch(error) {
+    res.json({status: "error"}).status(500);
+    console.log(error);
+  }
+})
 
 
 export default router;

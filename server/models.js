@@ -22,7 +22,7 @@ const albumSchema = mongoose.Schema({
 const commentSchema = mongoose.Schema({
     username: String,
     comment: String,
-    album: {type: mongoose.Schema.Types.ObjectId, ref: "Album"},
+    album: String,
     uploadDate: { type: Date, default: Date.now }
 });
 
