@@ -27,12 +27,18 @@ export default function Album(props) {
         })
         .then((data) => {        
             setAlbum(data);
-            let tempPhotos = data.photos.map((photo) => {
+            let tempPhotos = []
+            data.photos.forEach((photo) => {
                 const image = new Image();
                 image.src = photo;
-                return { src: photo, width: image.width, height: image.height }
+                image.onload = () => {
+                    tempPhotos.push({src: photo, width: image.width, height: image.height });
+
+                    if (tempPhotos.length === data.photos.length) {
+                        setPhotos(tempPhotos); // Once all images are loaded, update state
+                    }
+                };
             });
-            setPhotos(tempPhotos);
         })
         .catch(error => console.log(error));
     }, []);
@@ -43,8 +49,8 @@ export default function Album(props) {
             return res.json();
         })
         .then((data) => {
-            let tempComments = data.map((comment) => {
-                return <Comment comment={comment}/>
+            let tempComments = data.toReversed().map((comment, index) => {
+                return <Comment key={index} comment={comment}/>
             })
             setComments(tempComments);
         })
@@ -68,9 +74,8 @@ export default function Album(props) {
             .then((res) => res.json())
             .then((data) => {
             let tempComments = data.toReversed().map((comment, index) => {
-                console.log(comment);
                 return (<Comment key={index} comment={comment}/>)
-            });
+            }); //this is probably never going to happen because useEffect hook is called when we set comments!
             setComments(tempComments);
             setComment("");
             })

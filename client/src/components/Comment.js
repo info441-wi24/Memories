@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 
 export default function Comment(props) {
     let comment = props.comment;
+    const dateObj = new Date(props.comment.uploadDate);
+    const month = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+    const date = month[dateObj.getUTCMonth()] + " " + dateObj.getUTCDate() + ", " + dateObj.getUTCFullYear()
+
     return (
         <>
         <div className="card mb-3">
@@ -12,7 +16,7 @@ export default function Comment(props) {
                 <div>
                   <h6 className="fw-bold text-primary mb-1">{comment.username}</h6>
                   <p className="text-muted small mb-0">
-                    {comment.uploadDate}
+                    {date}
                   </p>
                 </div>
               </div>

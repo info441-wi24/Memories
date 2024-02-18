@@ -4,26 +4,38 @@ import HomeCard from './HomeCard';
 
 export default function Home(props) {
     const [albums, setAlbums] = useState([]);
-    let photoAlbums = [];
 
     useEffect(() => {
-        fetch('/api/albums/view')
-        .then((res) => {
-            return res.json();
-        })
-        .then((data) => {            
-            photoAlbums = data.map((album, index) => {
-            return <HomeCard key={index} album={album} />
-        });
-            setAlbums(photoAlbums);
-        })
-        .catch(error => console.log(error));
-      }, []);
-
-    // let userInfo = users.map((user) => {
-    //     return <li key={user.username}>Username {user.username}, Age: {user.age}</li>
-    // });
-
+        let photoAlbums = [];
+        if (props.searchTerm == 0) {
+            console.log("no term")
+            fetch('/api/albums/view')
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {            
+                photoAlbums = data.map((album, index) => {
+                return <HomeCard key={index} album={album} />
+            });
+                setAlbums(photoAlbums);
+            })
+            .catch(error => console.log(error));
+        } else {
+            console.log("term")
+            fetch(`/api/albums/view?search=${props.searchTerm}`)
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {            
+                console.log(data);
+                photoAlbums = data.map((album, index) => {
+                return <HomeCard key={index} album={album} />
+            });
+                setAlbums(photoAlbums);
+            })
+            .catch(error => console.log(error));
+        }
+      }, [props.searchTerm]);
 
     return (
         <div className='justify-content-center container'>

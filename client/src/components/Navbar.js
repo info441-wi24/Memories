@@ -1,6 +1,19 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-export default function Navbar() {
+export default function Navbar(props) {
+    let [searchTerm, setSearchTerm] = useState("");
+
+    function buttonSubmit(event) {
+        event.preventDefault();
+        props.changeSearchBar(searchTerm);
+        // setSearchTerm("");
+    }
+
+    function changeTerm(event) {
+        setSearchTerm(event.target.value);
+    }
 
     return (
         <>
@@ -13,17 +26,17 @@ export default function Navbar() {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <Link className="nav-link" aria-current="page" to="/">Home</Link>
+                                <Link className="nav-link" aria-current="page" to="/">Gallery</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/create" className="nav-link" href="#">Create</Link>
+                                <Link className="nav-link" to="/create" href="#">Create</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" href="#">Login/My Albums</Link>
                             </li>
                         </ul>
-                        <form className="d-flex" role="search">
-                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                        <form className="d-flex" role="search" onSubmit={buttonSubmit}>
+                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={changeTerm} value={searchTerm}/>
                                 <button className="btn btn-outline-success" type="submit">Search</button>
                         </form>
                     </div>

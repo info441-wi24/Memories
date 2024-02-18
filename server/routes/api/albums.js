@@ -28,6 +28,7 @@ router.post('/create', upload.any(), async (req, res) => { //any() just uploads 
     const files = req.files; //after uploading, its put in files field
     let photoURLS = [];
     for (let file of files) {
+      console.log(file);
       photoURLS.push(file.url);
     }
 
@@ -51,19 +52,29 @@ router.post('/create', upload.any(), async (req, res) => { //any() just uploads 
 router.get("/view", async (req, res) => {
   // this one gets all the photo albums and displays on home screen UNLESS THERE IS A QUERY PARAMETER!!!
   let albumID = req.query.id;
-  console.log(albumID);
+  let albumSearch = req.query.search;
   try {
     if (albumID) {
       let album = await req.models.Album.findById(albumID);
       res.json(album).status(201);
-    } else {
+    } else if (albumSearch) {
+      let allAlbums = await req.models.Album.find();
+      let albumsMatch = [];
+      for (let album of allAlbums) {
+        if (album.name.toLowerCase().includes(albumSearch.toLowerCase()) || album.username == albumSearch) {
+          albumsMatch.push(album);
+        }
+      }
+      res.json(albumsMatch).status(201);
+    }
+    else {
       let allAlbums = await req.models.Album.find();
       res.json(allAlbums).status(201);
     }
   } catch (error) {
+    console.log(error);
     res.json({status: "error"}).status(500);
   }
-
 });
 
 router.post("/comment", async (req, res) => {
