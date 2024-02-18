@@ -67,9 +67,10 @@ export default function Album(props) {
             fetch(`/api/albums/comment?id=${albumID}`)
             .then((res) => res.json())
             .then((data) => {
-            let tempComments = data.map((comment) => {
-                return <Comment comment={comment}/>
-            })
+            let tempComments = data.toReversed().map((comment, index) => {
+                console.log(comment);
+                return (<Comment key={index} comment={comment}/>)
+            });
             setComments(tempComments);
             setComment("");
             })

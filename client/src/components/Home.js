@@ -24,16 +24,13 @@ export default function Home(props) {
     //     return <li key={user.username}>Username {user.username}, Age: {user.age}</li>
     // });
 
-    console.log(photoAlbums);
-
 
     return (
         <div className='justify-content-center container'>
-            <h1>This is the homescreen!</h1>
-            {albums}
-            {/* <ul>
-                {userInfo}
-            </ul> */}
+            <h1 className="mt-3">Gallery</h1>
+            <div className="gallery">
+                {albums}
+            </div>
         </div>
     )
 }

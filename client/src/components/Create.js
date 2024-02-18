@@ -7,6 +7,7 @@ export default function Create() {
     const [albumDescription, setAlbumDescription] = useState("");
     const [photos, setPhotos] = useState([]);
     const [previewUrls, setPreviewUrl] = useState([]);
+    const [alert, setAlert] = useState("");
     const aRef = useRef(null); //reference to file input;
 
     useEffect(() => {
@@ -58,17 +59,19 @@ export default function Create() {
             formData.append(`photo${index}`, photo);
         })
 
-
+        setAlert("Uploading your album...");
         fetch("api/albums/create", {
             method: "POST",
             body: formData
-        });
-
-        setPreviewUrl([]);
-        setPhotos([]);
-        setAlbumName("");
-        setAlbumDescription("");
-        aRef.current.value = null;
+        })
+        .then(() => {
+            setPreviewUrl([]);
+            setPhotos([]);
+            setAlbumName("");
+            setAlbumDescription("");
+            aRef.current.value = null;
+            setAlert("Your album has been successfully uploaded!");
+        }); 
     }
 
 
@@ -93,6 +96,7 @@ export default function Create() {
                             <input ref={aRef} type="file" className="form-control-file" onChange={photosChange} accept="image/*" multiple required/>
                         </div>
                         <button type="submit" className="btn btn-primary">Submit</button>
+                        <p className="alert">{alert}</p>
                     </form>
                 </div>
             </div>

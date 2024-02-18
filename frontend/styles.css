@@ -70,6 +70,14 @@
     left: 50%;
     transform: translateX(-50%);
   }
+
+  .album-title {
+    margin: 0
+  }
+
+  .user-info {
+    margin: 0;
+  }
   
   .like {
     font-size: 24px;
