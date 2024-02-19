@@ -14,7 +14,7 @@ export default function Home(props) {
                 return res.json();
             })
             .then((data) => {            
-                photoAlbums = data.map((album, index) => {
+                photoAlbums = data.toReversed().map((album, index) => {
                 return <HomeCard key={index} album={album} />
             });
                 setAlbums(photoAlbums);
