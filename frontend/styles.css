@@ -1,0 +1,89 @@
+/* Updated styles.css content */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 10px 20px;
+  }
+  
+  .logo, .nav {
+    display: inline-block;
+  }
+  
+  .search-bar {
+    flex-grow: 1;
+    margin: 0 20px;
+  }
+  
+  .search-bar input {
+    width: calc(100% - 40px); /* Subtracting padding from total width */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .nav {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 10px; /* Creates space between navigation items */
+  }
+  
+  .nav li {
+    padding: 0 10px;
+  }
+  
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    padding: 20px;
+  }
+  
+  .album {
+    background-color: #ddd; /* This makes the square visible */
+    height: 200px; /* Fixed height for the square */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    position: relative; /* For absolute positioning of elements inside */
+  }
+  
+  .album-info {
+    text-align: center;
+    position: absolute;
+    bottom: 10px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .album-title {
+    margin: 0
+  }
+
+  .user-info {
+    margin: 0;
+  }
+  
+  .like {
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+  
