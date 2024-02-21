@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom'
 
-export default function Create() {
+export default function Create(props) {
     const [albumName, setAlbumName] = useState("");
     const [albumDescription, setAlbumDescription] = useState("");
     const [photos, setPhotos] = useState([]);
@@ -11,6 +11,10 @@ export default function Create() {
     const [alert, setAlert] = useState("");
     const aRef = useRef(null); //reference to file input;
     const redirect = useNavigate();
+
+    if (props.user == undefined || props.user.status == "loggedout") {
+        redirect("/")
+    }
 
     useEffect(() => {
         if (!photos || photos.length === 0) {

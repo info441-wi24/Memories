@@ -68,7 +68,7 @@ export default function Album(props) {
         event.stopPropagation();
         fetch('/api/albums/comment', {
             method: 'POST',
-            body: JSON.stringify({comment: commentInput, album: albumID}),
+            body: JSON.stringify({comment: commentInput, album: albumID, username: props.user.userInfo.name}),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -105,6 +105,8 @@ export default function Album(props) {
         .catch((err) => console.log(err))
     }
 
+    console.log(props);
+
     return (
         <div className='row container py-3'>
             <div>
@@ -132,10 +134,12 @@ export default function Album(props) {
                 <h3>Comment Section</h3>
                 <div className='border border-3 rounded-3 right'>
                     <div className='p-2'>
-                        {comments.length == 0 && <p>No comments yet. Add a comment!</p>}
+                        {comments.length == 0 && props.user.status == "loggedout" && <p>No comments yet. Login to add a comment!</p>}
+                        {comments.length == 0 && props.user && props.user.status == "loggedin" && <p>No comments yet. Add a comment!</p>}
                         {comments}
                     </div>
                 </div>
+                {props.user.status == "loggedin" &&
                 <div className='py-4'>
                     <form onSubmit={submitAction}>
                         <textarea type="text" className='form-control' placeholder='Add comment' onChange={commentChange} value={commentInput} required />
@@ -144,6 +148,7 @@ export default function Album(props) {
                         </div>
                     </form> 
                 </div>
+                }
             </div>
         </div>
     )

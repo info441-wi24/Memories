@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({status: "loggedout"});
   let redirect = useNavigate();
 
   function changeSearchBar(term) {
@@ -20,7 +20,7 @@ function App() {
   }
 
   useEffect(() => {
-    fetch('api/users/myInfo')
+    fetch('/api/users/myInfo')
     .then (res => res.json())
     .then ((data) => {
       setUser(data);
@@ -34,8 +34,8 @@ function App() {
       <Navbar changeSearchBar={changeSearchBar} user={user}/>
       <Routes>
         <Route index element={<Home searchTerm={searchTerm} />} />
-        <Route path="/create" element={<Create />} />
-        <Route path="/album/:id" element={<Album />} />
+        <Route path="/create" element={<Create  user={user}/>}/>
+        <Route path="/album/:id" element={<Album user={user}/>}/>
       </Routes>
     </>
   );

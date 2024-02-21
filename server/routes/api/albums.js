@@ -136,7 +136,7 @@ router.post('/like', async (req, res) => {
 router.post("/comment", async (req, res) => {
   try {
     let newComment = new req.models.Comment({
-        username: "unknown",
+        username: req.body.username,
         comment: req.body.comment,
         album: req.body.album,
     });
