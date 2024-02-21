@@ -69,7 +69,7 @@ router.get("/view", async (req, res) => {
       let allAlbums = await req.models.Album.find();
       let albumsMatch = [];
       for (let album of allAlbums) {
-        if (album.name.toLowerCase().includes(albumSearch.toLowerCase()) || album.username == albumSearch) {
+        if (album.albumName.toLowerCase().includes(albumSearch.toLowerCase()) || album.username.includes(albumSearch)) {
           albumsMatch.push(album);
         }
       }
