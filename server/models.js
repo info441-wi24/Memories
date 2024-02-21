@@ -11,8 +11,9 @@ const userSchema = mongoose.Schema({
 })
 
 const albumSchema = mongoose.Schema({
-    // username: String,
     name: String,
+    username: String,
+    albumName: String,
     description: String,
     photos: [String],
     likes: [String],

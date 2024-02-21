@@ -110,8 +110,8 @@ export default function Album(props) {
     return (
         <div className='row container py-3'>
             <div>
-                    <h1>{album.name}</h1>
-                    <h2 className="fs-4">{"@unknown user"}</h2>
+                    <h1>{album.albumName}</h1>
+                    <h2 className="fs-4">{album.username}</h2>
                     <p>{album.description}</p>
                     <button onClick={deleteAlbum} className="btn btn-primary mb-3">Delete 🗑️</button>
             </div>

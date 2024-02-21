@@ -59,6 +59,8 @@ export default function Create(props) {
         event.preventDefault();
         event.stopPropagation();
         const formData = new FormData();
+        formData.append('name', props.user.userInfo.name);
+        formData.append('username', props.user.userInfo.username);
         formData.append('albumName', albumName);
         formData.append('albumDescription', albumDescription);
         photos.forEach((photo, index) => {

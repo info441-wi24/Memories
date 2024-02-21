@@ -31,8 +31,12 @@ router.post('/create', upload.any(), async (req, res) => { //any() just uploads 
       photoURLS.push(file.url);
     }
 
+    console.log(req.body);
+
     let newAlbum = new req.models.Album({
-      name: req.body.albumName,
+      name: req.body.name,
+      username: req.body.username,
+      albumName: req.body.albumName,
       description: req.body.albumDescription,
       photos: photoURLS,
       likes: []
