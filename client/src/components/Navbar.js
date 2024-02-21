@@ -32,7 +32,7 @@ export default function Navbar(props) {
                                 <Link className="nav-link" to="/create" href="#">Create</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" href="#">Login/My Albums</Link>
+                                <a className="nav-link" href="http://localhost:3001/signin">Login</a>
                             </li>
                         </ul>
                         <form className="d-flex" role="search" onSubmit={buttonSubmit}>
