@@ -35,7 +35,7 @@ export default function HomeCard(props) {
         <div className="card img-test">
             <img src={props.album.photos[0]} className="card-img-top" alt="album thumbnail"/>
                 <div className="card-body">
-                    <button className="btn like" onClick={onChangeLike}>{like}</button>
+                    <button className="btn btn-like like" onClick={onChangeLike}>{like}</button>
                     <h5 className="card-title">{props.album.name}</h5>
                     <p className="card-subtitle text-body-secondary">unknown user</p>
                     <p className="card-text">Likes: {likeCounter}</p>

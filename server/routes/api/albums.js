@@ -28,7 +28,6 @@ router.post('/create', upload.any(), async (req, res) => { //any() just uploads 
     const files = req.files; //after uploading, its put in files field
     let photoURLS = [];
     for (let file of files) {
-      console.log(file);
       photoURLS.push(file.url);
     }
 
@@ -39,8 +38,13 @@ router.post('/create', upload.any(), async (req, res) => { //any() just uploads 
       likes: []
     }) //date is already placed in because of model
 
-    newAlbum.save();
-    res.status(201).json({status: "success"})
+    newAlbum.save()
+    .then((savedAlbum) => {
+      res.status(201).json({status: "success", savedAlbum: savedAlbum})
+    })
+    .catch((error) => {
+      res.json({status: "error"}).status(500);
+    });
   } catch (error) {
     console.log(error);
     res.json({status: "error"}).status(500);
@@ -56,7 +60,6 @@ router.get("/view", async (req, res) => {
   try {
     if (albumID) {
       let album = await req.models.Album.findById(albumID);
-      console.log(album);
       res.json(album).status(201);
     } else if (albumSearch) {
       let allAlbums = await req.models.Album.find();
@@ -75,6 +78,35 @@ router.get("/view", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.json({status: "error"}).status(500);
+  }
+});
+
+router.delete('/', async (req, res) => {
+  let albumID = req.body.albumID;
+  console.log(req.body);
+  // if (!req.session.isAuthenticated) {
+  //     res.json({status: "error", error: "not logged in"}).status(401);
+  // }
+
+  try {
+      // if (req.session.account.username != post.username) {
+      //     res.json({
+      //         status: 'error',
+      //         error: "you can only delete your own posts"
+      //      });
+      // }
+
+      // let comments = await req.models.Comment.find({
+      //   album: albumID
+      // });
+      
+      await req.models.Comment.deleteMany({album: albumID});
+      await req.models.Album.deleteOne({_id: albumID});
+      res.json({status: "success"});
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({"status": "error", "error": error});
+
   }
 });
 
@@ -128,6 +160,8 @@ router.get("/comment", async (req, res) => {
     console.log(error);
   }
 })
+
+
 
 
 export default router;

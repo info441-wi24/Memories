@@ -12,21 +12,6 @@ export default function Home(props) {
                 body: JSON.stringify({albumID: albumID}),
             })
             .catch(error => console.log(error))   
-            .then(() => {
-                let photoAlbums = [];
-                fetch(`/api/albums/view?search=${props.searchTerm}`)
-                .then((res) => {
-                    return res.json();
-                })
-                .then((data) => {            
-                    console.log(data);
-                    photoAlbums = data.toReversed().map((album, index) => {
-                    return <HomeCard key={index} album={album} changeLike={changeLike} />
-                });
-                    setAlbums(photoAlbums);
-                })
-                .catch(error => console.log(error))
-            });
         } catch (error) {
             console.log(error);
         }
@@ -61,8 +46,6 @@ export default function Home(props) {
             .catch(error => console.log(error));
         }
       }, [props.searchTerm]);
-
-      console.log(albums);
 
     return (
         <div className='justify-content-center container'>

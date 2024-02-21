@@ -10,6 +10,8 @@ import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Album(props) {
     let params = useParams();
@@ -19,6 +21,7 @@ export default function Album(props) {
     const [index, setIndex] = useState(-1);
     const [commentInput, setComment] = useState("");
     const [comments, setComments] = useState([]);
+    const redirect = useNavigate();
 
     useEffect(() => {
         fetch(`/api/albums/view?id=${albumID}`)
@@ -88,10 +91,28 @@ export default function Album(props) {
         .catch(error => console.log(error));
     }
 
+    function deleteAlbum() {
+        fetch(`/api/albums/`, {
+            method: "DELETE",
+            body: JSON.stringify({albumID: albumID}),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(() => {
+            redirect("/");
+        })
+        .catch((err) => console.log(err))
+    }
+
     return (
         <div className='row container py-3'>
-            <h1>{album.name}</h1>
-            <h2>{album.description}</h2>
+            <div>
+                    <h1>{album.name}</h1>
+                    <h2 className="fs-4">{"@unknown user"}</h2>
+                    <p>{album.description}</p>
+                    <button onClick={deleteAlbum} className="btn btn-primary mb-3">Delete 🗑️</button>
+            </div>
             <div className='col-8'>
                 <PhotoAlbum 
                     layout='rows' 

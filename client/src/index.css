@@ -86,6 +86,10 @@
   left: -10px;
 }
 
+.btn-like:hover {
+  --bs-btn-border-color: none;
+}
+
 
 @media (min-width: 1400px) {
   .container {

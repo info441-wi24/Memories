@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useEffect } from "react";
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 export default function Create() {
     const [albumName, setAlbumName] = useState("");
@@ -9,6 +10,7 @@ export default function Create() {
     const [previewUrls, setPreviewUrl] = useState([]);
     const [alert, setAlert] = useState("");
     const aRef = useRef(null); //reference to file input;
+    const redirect = useNavigate();
 
     useEffect(() => {
         if (!photos || photos.length === 0) {
@@ -64,14 +66,19 @@ export default function Create() {
             method: "POST",
             body: formData
         })
-        .then(() => {
+        .then((data) => {
+            return data.json();
+        })
+        .then((object) => {
+            console.log(object.savedAlbum._id);
+            redirect("/album/" + object.savedAlbum._id);
             setPreviewUrl([]);
             setPhotos([]);
             setAlbumName("");
             setAlbumDescription("");
             aRef.current.value = null;
             setAlert("Your album has been successfully uploaded!");
-        }); 
+        }).catch((err) => console.log(err)); 
     }
 
 
