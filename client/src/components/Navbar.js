@@ -15,6 +15,7 @@ export default function Navbar(props) {
         setSearchTerm(event.target.value);
     }
 
+
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body" data-bs-theme="dark">
@@ -28,12 +29,22 @@ export default function Navbar(props) {
                             <li className="nav-item">
                                 <Link className="nav-link" aria-current="page" to="/">Gallery</Link>
                             </li>
-                            <li className="nav-item">
+                            {props.user == "undefined" || props.user.status == "loggedout" && <a className="nav-link" href="http://localhost:3001/signin">Login</a>}
+                            {props.user.status == "loggedin" &&  
+                            <>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/create" href="#">Create</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="http://localhost:3001/signout">Logout</a>
+                                </li>
+                            </>}
+                            {/* <li className="nav-item">
                                 <Link className="nav-link" to="/create" href="#">Create</Link>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="http://localhost:3001/signin">Login</a>
-                            </li>
+                            </li> */}
+                            {/* <li className="nav-item">
+                                {props.user == "undefined" || props.user.status == "loggedout" ? <a className="nav-link" href="http://localhost:3001/signin">Login</a> : <a className="nav-link" href="http://localhost:3001/signout">Logout</a>}
+                            </li> */}
                         </ul>
                         <form className="d-flex" role="search" onSubmit={buttonSubmit}>
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={changeTerm} value={searchTerm}/>

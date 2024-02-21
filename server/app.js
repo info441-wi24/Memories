@@ -67,7 +67,7 @@ app.get(
 	'/signin',
 	(req, res, next) => {
 		return req.authContext.login({
-			postLoginRedirectUri: "/", // redirect here after login
+			postLoginRedirectUri: "http://localhost:3000/", // redirect here after login
 		})(req, res, next);
 	}
 );
@@ -76,7 +76,7 @@ app.get(
 	'/signout',
 	(req, res, next) => {
 		return req.authContext.logout({
-			postLogoutRedirectUri: "/", // redirect here after logout
+			postLogoutRedirectUri: "http://localhost:3000/", // redirect here after logout
 		})(req, res, next);
 	}
 );
