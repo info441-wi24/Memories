@@ -5,37 +5,64 @@ import HomeCard from './HomeCard';
 export default function Home(props) {
     const [albums, setAlbums] = useState([]);
 
+    function changeLike(albumID) {
+        try {
+            fetch(`/api/albums/like?id=${albumID}`, {
+                method: "POST",
+                body: JSON.stringify({albumID: albumID}),
+            })
+            .catch(error => console.log(error))   
+            .then(() => {
+                let photoAlbums = [];
+                fetch(`/api/albums/view?search=${props.searchTerm}`)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {            
+                    console.log(data);
+                    photoAlbums = data.toReversed().map((album, index) => {
+                    return <HomeCard key={index} album={album} changeLike={changeLike} />
+                });
+                    setAlbums(photoAlbums);
+                })
+                .catch(error => console.log(error))
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         let photoAlbums = [];
         if (props.searchTerm == 0) {
-            console.log("no term")
             fetch('/api/albums/view')
             .then((res) => {
                 return res.json();
             })
             .then((data) => {            
                 photoAlbums = data.toReversed().map((album, index) => {
-                return <HomeCard key={index} album={album} />
+                return <HomeCard key={index} album={album} changeLike={changeLike} />
             });
                 setAlbums(photoAlbums);
             })
             .catch(error => console.log(error));
         } else {
-            console.log("term")
             fetch(`/api/albums/view?search=${props.searchTerm}`)
             .then((res) => {
                 return res.json();
             })
             .then((data) => {            
                 console.log(data);
-                photoAlbums = data.map((album, index) => {
-                return <HomeCard key={index} album={album} />
+                photoAlbums = data.toReversed().map((album, index) => {
+                return <HomeCard key={index} album={album} changeLike={changeLike} />
             });
                 setAlbums(photoAlbums);
             })
             .catch(error => console.log(error));
         }
       }, [props.searchTerm]);
+
+      console.log(albums);
 
     return (
         <div className='justify-content-center container'>

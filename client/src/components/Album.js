@@ -70,12 +70,17 @@ export default function Album(props) {
                 'Content-Type': 'application/json'
             }
         }).then(() => {
+            let tempComments = comments;
+            // tempComments.unshift(<Comment key={index} comment={commentInput}/>);
+            // console.log(tempComments);
+            // setComments(tempComments);
+            // setComment("");
             fetch(`/api/albums/comment?id=${albumID}`)
             .then((res) => res.json())
             .then((data) => {
             let tempComments = data.toReversed().map((comment, index) => {
                 return (<Comment key={index} comment={comment}/>)
-            }); //this is probably never going to happen because useEffect hook is called when we set comments!
+            }); //this is probably not a good idea lol! also probably should just change the array rather than refetching lol
             setComments(tempComments);
             setComment("");
             })

@@ -56,6 +56,7 @@ router.get("/view", async (req, res) => {
   try {
     if (albumID) {
       let album = await req.models.Album.findById(albumID);
+      console.log(album);
       res.json(album).status(201);
     } else if (albumSearch) {
       let allAlbums = await req.models.Album.find();
@@ -75,6 +76,29 @@ router.get("/view", async (req, res) => {
     console.log(error);
     res.json({status: "error"}).status(500);
   }
+});
+
+router.post('/like', async (req, res) => {
+  let albumID = req.query.id;
+  try {
+      let album = await req.models.Album.findById(albumID);
+
+      if (!album.likes.includes("user")) { //change to req.session.account.username later
+          await album.likes.push("user");
+      } else {
+          await req.models.Album.updateOne(
+            {_id: albumID},
+            { $pull : {likes: "user"}} //change to req.session.account.username later
+          );
+      }
+
+      await album.save();
+      res.json({status: "success"});
+  } catch(error) {
+      console.log(error);
+      res.status(500).json({"status": "error", "error": error});
+  }
+
 });
 
 router.post("/comment", async (req, res) => {
