@@ -3,9 +3,18 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function HomeCard(props) {
-    const [users, setUsers] = useState([]);
+    const [user, setUser] = useState();
     const [likeCounter, setLikesCounter] = useState(props.album.likes.length);
-    const [like, changeLike] = useState(!props.album.likes.includes("user") ? "🤍" : "❤️")
+    const [like, changeLike] = useState("");
+
+    useEffect(() => {
+        if (props.user.status == "loggedin" && props.album.likes.includes(props.user.userInfo.username)) {
+            changeLike("❤️");
+        } else {
+            changeLike("🤍");
+        }
+    }, [props.user]);
+    
 
     let imagePlaceholder;
     let date = new Date(props.album.uploadDate);
@@ -17,8 +26,7 @@ export default function HomeCard(props) {
             imagePlaceholder = props.album.photos[i];
             break;
         }
-    }
-    
+    }    
 
     function onChangeLike(event) {
         props.changeLike(props.album._id);
@@ -31,11 +39,12 @@ export default function HomeCard(props) {
         }
     }
 
+    
     return (
         <div className="card img-test">
             <img src={props.album.photos[0]} className="card-img-top" alt="album thumbnail"/>
                 <div className="card-body">
-                    <button className="btn btn-like like" onClick={onChangeLike}>{like}</button>
+                    {props.user != undefined && props.user.status == "loggedin" && <button className="btn btn-like like" onClick={onChangeLike}>{like}</button>}
                     <h5 className="card-title">{props.album.albumName}</h5>
                     <p className="card-subtitle text-body-secondary">{props.album.username}</p>
                     <p className="card-text">Likes: {likeCounter}</p>

@@ -8,7 +8,6 @@ export default function Navbar(props) {
     function buttonSubmit(event) {
         event.preventDefault();
         props.changeSearchBar(searchTerm);
-        // setSearchTerm("");
     }
 
     function changeTerm(event) {

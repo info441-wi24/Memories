@@ -27,13 +27,13 @@ function App() {
     })
     .catch (err => console.log(err))
   }, []);
-  console.log(user);
+
 
   return (
     <>
       <Navbar changeSearchBar={changeSearchBar} user={user}/>
       <Routes>
-        <Route index element={<Home searchTerm={searchTerm} />} />
+        <Route index element={<Home searchTerm={searchTerm} user={user}/>} />
         <Route path="/create" element={<Create  user={user}/>}/>
         <Route path="/album/:id" element={<Album user={user}/>}/>
       </Routes>

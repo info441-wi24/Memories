@@ -19,33 +19,35 @@ export default function Home(props) {
 
     useEffect(() => {
         let photoAlbums = [];
-        if (props.searchTerm == 0) {
+            //probably faster just to look throuh albums you have already, but just want to make sure to always get updated version from server
+            fetch(`/api/albums/view?search=${props.searchTerm}`)
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {            
+                photoAlbums = data.toReversed().map((album, index) => {
+                return <HomeCard key={index} album={album} changeLike={changeLike} user={props.user}/>
+            });
+                setAlbums(photoAlbums);
+            })
+            .catch(error => console.log(error));
+        
+      }, [props.searchTerm]);
+
+      useEffect(() => {
+        let photoAlbums = [];
             fetch('/api/albums/view')
             .then((res) => {
                 return res.json();
             })
             .then((data) => {            
                 photoAlbums = data.toReversed().map((album, index) => {
-                return <HomeCard key={index} album={album} changeLike={changeLike} />
+                return <HomeCard key={index} album={album} changeLike={changeLike} user={props.user} />
             });
                 setAlbums(photoAlbums);
             })
             .catch(error => console.log(error));
-        } else {
-            fetch(`/api/albums/view?search=${props.searchTerm}`)
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {            
-                console.log(data);
-                photoAlbums = data.toReversed().map((album, index) => {
-                return <HomeCard key={index} album={album} changeLike={changeLike} />
-            });
-                setAlbums(photoAlbums);
-            })
-            .catch(error => console.log(error));
-        }
-      }, [props.searchTerm]);
+      }, [props.user]);
 
     return (
         <div className='justify-content-center container'>

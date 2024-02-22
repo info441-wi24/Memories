@@ -16,11 +16,12 @@ import { useNavigate } from 'react-router-dom';
 export default function Album(props) {
     let params = useParams();
     let albumID = params.id;
-    const [album, setAlbum] = useState({});
+    const [album, setAlbum] = useState({likes: []});
     const [photos, setPhotos] = useState([]);
     const [index, setIndex] = useState(-1);
     const [commentInput, setComment] = useState("");
     const [comments, setComments] = useState([]);
+    const [like, changeLike] = useState("");
     const redirect = useNavigate();
 
     useEffect(() => {
@@ -30,6 +31,8 @@ export default function Album(props) {
         })
         .then((data) => {        
             setAlbum(data);
+            
+            //adding photos
             let tempPhotos = []
             data.photos.forEach((photo) => {
                 const image = new Image();
@@ -47,6 +50,7 @@ export default function Album(props) {
     }, []);
 
     useEffect(() => {
+        //useEffect at the very start of component's life
         fetch(`/api/albums/comment?id=${albumID}`)
         .then((res) => {
             return res.json();
@@ -58,6 +62,33 @@ export default function Album(props) {
             setComments(tempComments);
         })
     }, []);
+
+    useEffect(() => {
+        //useEffect ONLY when album changes!
+            if (props.user.status == "loggedin" && album.likes.includes(props.user.userInfo.username)) {
+                changeLike("Already Liked ❤️");
+            } else {
+                changeLike("Like 🤍");
+            }
+        
+    }, [album])
+
+    function likeChange(event) {
+        try {
+            fetch(`/api/albums/like?id=${albumID}`, {
+                method: "POST",
+                body: JSON.stringify({albumID: albumID}),
+            })
+            .catch(error => console.log(error));
+            if (like == "Already Liked ❤️") {
+                changeLike("Like 🤍");
+            } else {
+                changeLike("Already Liked ❤️");
+            } 
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     function commentChange(event) {
         setComment(event.target.value);
@@ -74,10 +105,6 @@ export default function Album(props) {
             }
         }).then(() => {
             let tempComments = comments;
-            // tempComments.unshift(<Comment key={index} comment={commentInput}/>);
-            // console.log(tempComments);
-            // setComments(tempComments);
-            // setComment("");
             fetch(`/api/albums/comment?id=${albumID}`)
             .then((res) => res.json())
             .then((data) => {
@@ -105,15 +132,21 @@ export default function Album(props) {
         .catch((err) => console.log(err))
     }
 
-    console.log(props);
-
     return (
         <div className='row container py-3'>
             <div>
                     <h1>{album.albumName}</h1>
                     <h2 className="fs-4">{album.username}</h2>
                     <p>{album.description}</p>
-                    <button onClick={deleteAlbum} className="btn btn-primary mb-3">Delete 🗑️</button>
+                    {props.user.status == "loggedin" && album.username == props.user.userInfo.username 
+                    && <button onClick={deleteAlbum} className="btn btn-primary mb-3">Delete 🗑️</button>
+                    }
+                    {props.user.status == "loggedin" && like == "Already Liked ❤️"
+                    && <button onClick={likeChange} className="btn btn-secondary mx-2 mb-3">{like}</button>
+                    }
+                    {props.user.status == "loggedin" && like == "Like 🤍"
+                    && <button onClick={likeChange} className="btn btn-danger mx-2 mb-3">{like}</button>
+                    }
             </div>
             <div className='col-8'>
                 <PhotoAlbum 
