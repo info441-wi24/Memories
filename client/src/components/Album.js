@@ -139,13 +139,13 @@ export default function Album(props) {
                     <h2 className="fs-4">{album.username}</h2>
                     <p>{album.description}</p>
                     {props.user.status == "loggedin" && album.username == props.user.userInfo.username 
-                    && <button onClick={deleteAlbum} className="btn btn-primary mb-3">Delete 🗑️</button>
+                    && <button onClick={deleteAlbum} className="btn btn-primary mb-3 me-2">Delete 🗑️</button>
                     }
                     {props.user.status == "loggedin" && like == "Already Liked ❤️"
-                    && <button onClick={likeChange} className="btn btn-secondary mx-2 mb-3">{like}</button>
+                    && <button onClick={likeChange} className="btn btn-secondary mb-3">{like}</button>
                     }
                     {props.user.status == "loggedin" && like == "Like 🤍"
-                    && <button onClick={likeChange} className="btn btn-danger mx-2 mb-3">{like}</button>
+                    && <button onClick={likeChange} className="btn btn-danger mb-3">{like}</button>
                     }
             </div>
             <div className='col-8'>

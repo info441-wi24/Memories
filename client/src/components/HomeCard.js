@@ -47,7 +47,7 @@ export default function HomeCard(props) {
                     {props.user != undefined && props.user.status == "loggedin" && <button className="btn btn-like like" onClick={onChangeLike}>{like}</button>}
                     <h5 className="card-title">{props.album.albumName}</h5>
                     <p className="card-subtitle text-body-secondary">{props.album.username}</p>
-                    <p className="card-text">Likes: {likeCounter}</p>
+                    <p className="card-text">❤️ Likes: {likeCounter}</p>
                     <p className="card-text"><small className="text-muted">Created: {month[date.getUTCMonth()] + " " + date.getUTCDate() + ", " + date.getUTCFullYear()}</small></p>
                     <Link to={"/album/" + props.album._id} className="btn btn-primary" album={props.album}>Open</Link>
                 </div>
