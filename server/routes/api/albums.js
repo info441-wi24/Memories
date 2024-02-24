@@ -140,7 +140,7 @@ router.post('/like', async (req, res) => {
   } else {
     try {
       await req.models.Album.updateOne(
-        { _id: albumID },
+        { _id: albumID, likes: {$ne: req.session.account.username} },
         { $push: { likes: req.session.account.username } }
       )
       res.json({ status: "success" }).status(201);
