@@ -35,11 +35,17 @@ router.post('/create', upload.any(), async (req, res) => { //any() just uploads 
         photoURLS.push(file.url);
       }
 
+      let tags = req.body.tags.split(",");
+      tags = tags.map((tag) => {
+        return "#" + tag;
+      });
+
       let newAlbum = new req.models.Album({
         name: req.body.name,
         username: req.body.username,
         albumName: req.body.albumName,
         description: req.body.albumDescription,
+        tags: tags,
         photos: photoURLS,
         likes: []
       }) //date is already placed in because of model
@@ -49,6 +55,7 @@ router.post('/create', upload.any(), async (req, res) => { //any() just uploads 
           res.status(201).json({ status: "success", savedAlbum: savedAlbum })
         })
         .catch((error) => {
+          console.log(error);
           res.json({ status: "error" }).status(500);
         });
     }
@@ -66,6 +73,7 @@ router.get("/view", async (req, res) => {
   // this one gets all the photo albums and displays on home screen UNLESS THERE IS A QUERY PARAMETER!!!
   let albumID = req.query.id;
   let albumSearch = req.query.search;
+  console.log(decodeURI(albumSearch));
   try {
     if (albumID) {
       let album = await req.models.Album.findById(albumID);
@@ -74,8 +82,16 @@ router.get("/view", async (req, res) => {
       let allAlbums = await req.models.Album.find();
       let albumsMatch = [];
       for (let album of allAlbums) {
-        if (album.albumName.toLowerCase().includes(albumSearch.toLowerCase()) || album.username.includes(albumSearch)) {
+
+        if (album.albumName.toLowerCase().includes(albumSearch.toLowerCase()) || album.username.toLowerCase().includes(albumSearch.toLowerCase())) {
           albumsMatch.push(album);
+        }
+
+        for (let tag of album.tags) {
+          if (tag.toLowerCase().includes(albumSearch.toLowerCase())) {
+            albumsMatch.push(album);
+            break;
+          }
         }
       }
       res.json(albumsMatch).status(201);

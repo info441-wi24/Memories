@@ -17,6 +17,7 @@ const albumSchema = mongoose.Schema({
     description: String,
     photos: [String],
     likes: [String],
+    tags: [String],
     uploadDate: { type: Date, default: Date.now }
 });
 

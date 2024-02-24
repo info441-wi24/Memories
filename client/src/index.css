@@ -90,6 +90,49 @@
   --bs-btn-border-color: none;
 }
 
+.btn-tag {
+  color: white;
+  background-color: purple;
+  border-color: purple;
+  --bs-btn-bg: purple;
+}
+
+.btn-tag:hover {
+  background-color: rgb(150, 3, 150);
+  border-color: purple;
+  --bs-btn-active-bg: rgb(150, 3, 150);
+  --bs-btn-active-color: white;
+  color: white;
+}
+
+.tag {
+  display: inline-block;
+  background-color: purple;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+.createTags {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 400px;
+  gap: 8px;
+}
+
+.albumTags {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 500px;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.homeCardTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
 @media (min-width: 1400px) {
   .container {

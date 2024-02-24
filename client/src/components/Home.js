@@ -20,11 +20,12 @@ export default function Home(props) {
     useEffect(() => {
         let photoAlbums = [];
             //probably faster just to look throuh albums you have already, but just want to make sure to always get updated version from server
-            fetch(`/api/albums/view?search=${props.searchTerm}`)
+            fetch(`/api/albums/view?search=${encodeURIComponent(props.searchTerm)}`)
             .then((res) => {
                 return res.json();
             })
-            .then((data) => {            
+            .then((data) => {
+                console.log("worked");            
                 photoAlbums = data.toReversed().map((album, index) => {
                 return <HomeCard key={index} album={album} changeLike={changeLike} user={props.user}/>
             });

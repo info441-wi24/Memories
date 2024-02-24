@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useEffect } from "react";
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom'
+import CreateTag from "./CreateTag";
 
 export default function Create(props) {
     const [albumName, setAlbumName] = useState("");
@@ -9,7 +10,10 @@ export default function Create(props) {
     const [photos, setPhotos] = useState([]);
     const [previewUrls, setPreviewUrl] = useState([]);
     const [alert, setAlert] = useState("");
+    const [tag, setTag] = useState("");
     const aRef = useRef(null); //reference to file input;
+    const [tagsContent, setTagsContent] = useState([]); //for sending to backend
+    const [tags, setTags] = useState([]); //for frontend only
     const redirect = useNavigate();
 
     if (props.user == undefined || props.user.status == "loggedout") {
@@ -19,7 +23,7 @@ export default function Create(props) {
     useEffect(() => {
         if (!photos || photos.length === 0) {
             setPreviewUrl([]);
-            return
+            return;
         }
 
         const previewUrlsCopy = [];
@@ -41,6 +45,15 @@ export default function Create(props) {
 
     }, [photos]);
 
+    useEffect(() => {
+        let newTags = [];
+        tagsContent.forEach((tag, index) => {
+            newTags.push(<CreateTag key={index} tag={tag} deleteTag={deleteTag} />);
+        });
+        setTags(newTags);
+    }, [tagsContent]);
+
+
     function albumNameChange(event) {
         let newValue = event.target.value
         setAlbumName(newValue);
@@ -55,6 +68,30 @@ export default function Create(props) {
         setPhotos([...event.target.files]);
     }
 
+    function tagsChange(event) {
+        let newValue = event.target.value;
+        setTag(newValue);
+    }
+
+    function deleteTag(tagRemove) {
+        let tempTags = [...tagsContent];
+        tempTags = tempTags.filter((tag) => {
+            return tag !== tagRemove;
+        });
+        setTagsContent(tempTags);
+    }
+
+    function addTag() {
+        if (tagsContent.includes(tag) || tag.length == 0) {
+            return;
+        }
+        let tempTags = [...tagsContent];
+        tempTags.push(tag);
+        setTagsContent(tempTags);
+        setTag("");
+    }
+
+
     function submitAction(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -63,6 +100,7 @@ export default function Create(props) {
         formData.append('username', props.user.userInfo.username);
         formData.append('albumName', albumName);
         formData.append('albumDescription', albumDescription);
+        formData.append('tags', tagsContent);
         photos.forEach((photo, index) => {
             formData.append(`photo${index}`, photo);
         })
@@ -72,61 +110,80 @@ export default function Create(props) {
             method: "POST",
             body: formData
         })
-        .then((data) => {
-            return data.json();
-        })
-        .then((object) => {
-            console.log(object.savedAlbum._id);
-            redirect("/album/" + object.savedAlbum._id);
-            setPreviewUrl([]);
-            setPhotos([]);
-            setAlbumName("");
-            setAlbumDescription("");
-            aRef.current.value = null;
-            setAlert("Your album has been successfully uploaded!");
-        }).catch((err) => console.log(err)); 
+            .then((data) => {
+                return data.json();
+            })
+            .then((object) => {
+                redirect("/album/" + object.savedAlbum._id);
+                setPreviewUrl([]);
+                setPhotos([]);
+                setAlbumName("");
+                setAlbumDescription("");
+                setTagsContent([]);
+                setTags([]);
+                aRef.current.value = null;
+                setAlert("Your album has been successfully uploaded!");
+            }).catch((err) => console.log(err));
     }
 
 
     return (
         <div className="container">
             <h1 className="mt-4 mb-5">Create New Album</h1>
-            <div className="createBox d-flex mb-5">
-                <div>
-                    <form onSubmit={submitAction}>
-                        <div className="mb-3">
-                            <label htmlFor="albumName" className="form-label">Photo Album Name</label>
-                            <input type="text" className="form-control" onChange={albumNameChange} value={albumName} placeholder="Kyoto Adventures" required/>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="albumDescription" className="form-label">Photo Album Description</label>
-                            <input type="text" className="form-control" onChange={albumDescriptionChange} value={albumDescription} required/>
-                        </div>
-                        <div>
-                            <label htmlFor="fileUpload" className="form-label">Upload Photos</label>
-                        </div>
-                        <div className="mb-3">
-                            <input ref={aRef} type="file" className="form-control-file" onChange={photosChange} accept="image/*" multiple required/>
-                        </div>
-                        <button type="submit" className="btn btn-primary">Submit</button>
-                        <p className="alert">{alert}</p>
-                    </form>
-                </div>
-            </div>
-            <div>
-                <h2>
-                    Preview Photos:
-                </h2>
-                <div className="row">
-                    {previewUrls && previewUrls.map((url, index) => {
-                        return (
-                            <div key={index} className="col-4 mt-4 mb-4">
-                                <img className="imgPreview" src={url} alt="preview" />
+            <div className="row">
+                <div className="createBox d-flex mb-5 col-4">
+                    <div>
+                        <form onSubmit={submitAction}>
+                            <div className="mb-3">
+                                <label htmlFor="albumName" className="form-label">Photo Album Name</label>
+                                <input type="text" className="form-control" onChange={albumNameChange} value={albumName} placeholder="Kyoto Adventures" required />
                             </div>
-                        );
-                    })}
+                            <div className="mb-3">
+                                <label htmlFor="albumDescription" className="form-label">Photo Album Description</label>
+                                <input type="text" className="form-control" onChange={albumDescriptionChange} value={albumDescription} required />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="albumDescription" className="form-label">Tags</label>
+                                <div className="row">
+                                    <div className="col-6">
+                                        <input type="text" className="form-control" onChange={tagsChange} value={tag} />
+                                    </div>
+                                    <div className="col-6">
+                                        <button type="button" onClick={addTag} className="btn btn-secondary">Add Tag</button>
+                                    </div>
+                                </div>
+                                <p className="text-muted">Please add tag one at a time.</p>
+                                <div className="createTags">
+                                    {tags}
+                                </div>
+                            </div>
+                            <div>
+                                <label htmlFor="fileUpload" className="form-label">Upload Photos</label>
+                            </div>
+                            <div className="mb-3">
+                                <input ref={aRef} type="file" className="form-control-file" onChange={photosChange} accept="image/*" multiple required />
+                            </div>
+                            <button type="submit" className="btn btn-primary">Submit</button>
+                            <p className="alert">{alert}</p>
+                        </form>
+                    </div>
+                </div>
+                <div className="col-8">
+                    <h2> Preview Photos: </h2>
+                    <div className="d-flex flex-wrap">
+                        {previewUrls && previewUrls.map((url, index) => {
+                            return (
+                                <div key={index} className="me-4 mt-4 mb-4">
+                                    <img className="imgPreview" src={url} alt="preview" />
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
+            {/* <div>
+                
+            </div> */}
 
         </div>
     )
