@@ -87,12 +87,14 @@ router.get("/view", async (req, res) => {
           albumsMatch.push(album);
         }
 
-        for (let tag of album.tags) {
-          if (tag.toLowerCase().includes(albumSearch.toLowerCase())) {
-            albumsMatch.push(album);
-            break;
+        if (!albumsMatch.includes(album)) {
+          for (let tag of album.tags) {
+            if (tag.toLowerCase().includes(albumSearch.toLowerCase())) {
+              albumsMatch.push(album);
+              break;
+            }
           }
-        }
+        } 
       }
       res.json(albumsMatch).status(201);
     } else {
