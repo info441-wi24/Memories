@@ -105,7 +105,7 @@ export default function Create(props) {
             formData.append(`photo${index}`, photo);
         })
 
-        setAlert("Uploading your album...");
+        setAlert("Uploading your album... this might take a while if you're uploading a lot of photos!");
         fetch("api/albums/create", {
             method: "POST",
             body: formData
