@@ -34,11 +34,12 @@ export default function HomeCard(props) {
     }    
 
     function onChangeLike(event) {
-        props.changeLike(props.album._id);
         if (like == "🤍") {
+            props.changeLike(props.album._id, "like");
             setLikesCounter(likeCounter + 1);
             changeLike("❤️")
         } else {
+            props.changeLike(props.album._id, "unlike");
             setLikesCounter(likeCounter - 1);
             changeLike("🤍")
         }

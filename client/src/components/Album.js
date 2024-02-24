@@ -83,15 +83,20 @@ export default function Album(props) {
 
     function likeChange(event) {
         try {
-            fetch(`/api/albums/like?id=${albumID}`, {
-                method: "POST",
-                body: JSON.stringify({ albumID: albumID }),
-            })
-                .catch(error => console.log(error));
             if (like == "Already Liked ❤️") {
                 changeLike("Like 🤍");
+                fetch(`/api/albums/unlike?id=${albumID}`, {
+                    method: "POST",
+                    body: JSON.stringify({ albumID: albumID }),
+                })
+                .catch(error => console.log(error));
             } else {
                 changeLike("Already Liked ❤️");
+                fetch(`/api/albums/like?id=${albumID}`, {
+                    method: "POST",
+                    body: JSON.stringify({ albumID: albumID }),
+                })
+                .catch(error => console.log(error));
             }
         } catch (error) {
             console.log(error);

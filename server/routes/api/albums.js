@@ -139,18 +139,28 @@ router.post('/like', async (req, res) => {
     res.json({ status: "error", error: "not logged in" }).status(401);
   } else {
     try {
-      let album = await req.models.Album.findById(albumID);
+      await req.models.Album.updateOne(
+        { _id: albumID },
+        { $push: { likes: req.session.account.username } }
+      )
+      res.json({ status: "success" }).status(201);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ "status": "error", "error": error });
+    }
+  }
+});
 
-      if (!album.likes.includes(req.session.account.username)) { //change to req.session.account.username later
-        await album.likes.push(req.session.account.username);
-      } else {
-        await req.models.Album.updateOne(
-          { _id: albumID },
-          { $pull: { likes: req.session.account.username } } //change to req.session.account.username later
-        );
-      }
-
-      await album.save();
+router.post('/unlike', async (req, res) => {
+  let albumID = req.query.id;
+  if (!req.session.isAuthenticated) {
+    res.json({ status: "error", error: "not logged in" }).status(401);
+  } else {
+    try {
+      await req.models.Album.updateOne(
+        { _id: albumID, likes: req.session.account.username },
+        { $pull: { likes: req.session.account.username } } //change to req.session.account.username later
+      );
       res.json({ status: "success" }).status(201);
     } catch (error) {
       console.log(error);

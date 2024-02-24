@@ -84,5 +84,32 @@ app.get(
 app.use(authProvider.interactionErrorHandler());
 
 
+// use this by going to urls like: 
+// http://localhost:3001/fakelogin?name=anotheruser
+app.get('/fakelogin', (req, res) => {
+    let newName = req.query.name;
+    let session=req.session;
+    session.isAuthenticated = true;
+    if(!session.account){
+        session.account = {};
+    }
+    session.account.name = newName;
+    session.account.username = newName;
+    console.log("set session");
+    res.redirect("/api/users/myInfo");
+});
+
+
+// use this by going to a url like: 
+// http://localhost:3001/fakelogout
+app.get('/fakelogout', (req, res) => {
+    let newName = req.query.name;
+    let session=req.session;
+    session.isAuthenticated = false;
+    session.account = {};
+    console.log("you have fake logged out");
+    res.redirect("/api/users/myInfo");
+});
+
 
 export default app;

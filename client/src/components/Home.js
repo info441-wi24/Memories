@@ -5,13 +5,21 @@ import HomeCard from './HomeCard';
 export default function Home(props) {
     const [albums, setAlbums] = useState([]);
 
-    function changeLike(albumID) {
+    function changeLike(albumID, status) {
         try {
-            fetch(`/api/albums/like?id=${albumID}`, {
-                method: "POST",
-                body: JSON.stringify({albumID: albumID}),
-            })
-            .catch(error => console.log(error))   
+            if (status == "like") {
+                fetch(`/api/albums/like?id=${albumID}`, {
+                    method: "POST",
+                    body: JSON.stringify({albumID: albumID}),
+                })
+                .catch(error => console.log(error))   
+            } else if (status == "unlike") {
+                fetch(`/api/albums/unlike?id=${albumID}`, {
+                    method: "POST",
+                    body: JSON.stringify({albumID: albumID}),
+                })
+                .catch(error => console.log(error))   
+            }
         } catch (error) {
             console.log(error);
         }
