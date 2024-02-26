@@ -17,8 +17,8 @@ export default function HomeCard(props) {
         }
     }, [props.user]);
 
-    let tempTags = props.album.tags.map((tag) => {
-        return <Tag tag={tag} />
+    let tempTags = props.album.tags.map((tag, index) => {
+        return <Tag tag={tag} key={index}/>
     });    
 
     let imagePlaceholder;

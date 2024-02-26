@@ -73,7 +73,6 @@ router.get("/view", async (req, res) => {
   // this one gets all the photo albums and displays on home screen UNLESS THERE IS A QUERY PARAMETER!!!
   let albumID = req.query.id;
   let albumSearch = req.query.search;
-  console.log(decodeURI(albumSearch));
   try {
     if (albumID) {
       let album = await req.models.Album.findById(albumID);

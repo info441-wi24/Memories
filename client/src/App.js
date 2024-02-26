@@ -23,7 +23,9 @@ function App() {
     fetch('/api/users/myInfo')
     .then (res => res.json())
     .then ((data) => {
-      setUser(data);
+      if (user != data) {
+        setUser(data);
+      }
     })
     .catch (err => console.log(err))
   }, []);

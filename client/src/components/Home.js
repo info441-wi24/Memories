@@ -32,8 +32,7 @@ export default function Home(props) {
             .then((res) => {
                 return res.json();
             })
-            .then((data) => {
-                console.log("worked");            
+            .then((data) => {           
                 photoAlbums = data.toReversed().map((album, index) => {
                 return <HomeCard key={index} album={album} changeLike={changeLike} user={props.user}/>
             });
@@ -41,22 +40,7 @@ export default function Home(props) {
             })
             .catch(error => console.log(error));
         
-      }, [props.searchTerm]);
-
-      useEffect(() => {
-        let photoAlbums = [];
-            fetch('/api/albums/view')
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {            
-                photoAlbums = data.toReversed().map((album, index) => {
-                return <HomeCard key={index} album={album} changeLike={changeLike} user={props.user} />
-            });
-                setAlbums(photoAlbums);
-            })
-            .catch(error => console.log(error));
-      }, [props.user]);
+      }, [props.searchTerm, props.user]); //useEffect when component first loads AND, props.user changes OR props.searchTerm changes
 
     return (
         <div className='justify-content-center container'>

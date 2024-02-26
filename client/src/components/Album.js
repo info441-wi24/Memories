@@ -33,10 +33,14 @@ export default function Album(props) {
             })
             .then((data) => {
                 setAlbum(data);
-
+                if (props.user.status == "loggedin" && data.likes.includes(props.user.userInfo.username)) {
+                    changeLike("Already Liked ❤️");
+                } else {
+                    changeLike("Like 🤍");
+                }
                 //adding tags
-                let tempTags = data.tags.map((tag) => {
-                    return <Tag tag={tag} />
+                let tempTags = data.tags.map((tag, index) => {
+                    return <Tag tag={tag} key={index} />
                 });
                 setTags(tempTags);
 
@@ -55,10 +59,7 @@ export default function Album(props) {
                 });
             })
             .catch(error => console.log(error));
-    }, []);
 
-    useEffect(() => {
-        //useEffect at the very start of component's life
         fetch(`/api/albums/comment?id=${albumID}`)
             .then((res) => {
                 return res.json();
@@ -69,17 +70,7 @@ export default function Album(props) {
                 })
                 setComments(tempComments);
             })
-    }, []);
-
-    useEffect(() => {
-        //useEffect ONLY when album changes! Perhaps try combining with the first useEffect hook?
-        if (props.user.status == "loggedin" && album.likes.includes(props.user.userInfo.username)) {
-            changeLike("Already Liked ❤️");
-        } else {
-            changeLike("Like 🤍");
-        }
-
-    }, [album])
+    }, [props.user]);
 
     function likeChange(event) {
         try {
