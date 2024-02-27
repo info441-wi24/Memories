@@ -49,6 +49,10 @@
   padding: 20px;
 }
 
+.gallery-title {
+  padding-left: 20px;
+}
+
 .album {
   background-color: #ddd; /* This makes the square visible */
   display: flex;

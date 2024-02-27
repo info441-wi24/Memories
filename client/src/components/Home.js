@@ -8,12 +8,14 @@ export default function Home(props) {
     function changeLike(albumID, status) {
         try {
             if (status == "like") {
+                console.log("like");
                 fetch(`/api/albums/like?id=${albumID}`, {
                     method: "POST",
                     body: JSON.stringify({albumID: albumID}),
                 })
                 .catch(error => console.log(error))   
             } else if (status == "unlike") {
+                console.log("unlike");
                 fetch(`/api/albums/unlike?id=${albumID}`, {
                     method: "POST",
                     body: JSON.stringify({albumID: albumID}),
@@ -44,7 +46,7 @@ export default function Home(props) {
 
     return (
         <div className='justify-content-center container'>
-            <h1 className="mt-3">Gallery</h1>
+            <h1 className="gallery-title mt-3">Gallery</h1>
             <div className="gallery">
                 {albums}
             </div>

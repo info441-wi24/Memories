@@ -11,9 +11,9 @@ export default function HomeCard(props) {
 
     useEffect(() => {
         if (props.user.status == "loggedin" && props.album.likes.includes(props.user.userInfo.username)) {
-            changeLike("❤️");
+            changeLike("Liked ❤️");
         } else {
-            changeLike("🤍");
+            changeLike("Like 🤍");
         }
     }, [props.user]);
 
@@ -34,14 +34,14 @@ export default function HomeCard(props) {
     }    
 
     function onChangeLike(event) {
-        if (like == "🤍") {
+        if (like == "Like 🤍") {
             props.changeLike(props.album._id, "like");
             setLikesCounter(likeCounter + 1);
-            changeLike("❤️")
-        } else {
+            changeLike("Liked ❤️")
+        } else if (like == "Liked ❤️") {
             props.changeLike(props.album._id, "unlike");
             setLikesCounter(likeCounter - 1);
-            changeLike("🤍")
+            changeLike("Like 🤍")
         }
     }
 
@@ -50,7 +50,7 @@ export default function HomeCard(props) {
         <div className="card img-test">
             <img src={props.album.photos[0]} className="card-img-top" alt="album thumbnail"/>
                 <div className="card-body">
-                    {props.user != undefined && props.user.status == "loggedin" && <button className="btn btn-like like" onClick={onChangeLike}>{like}</button>}
+                    {/* {props.user != undefined && props.user.status == "loggedin" && <button className="btn btn-like like" onClick={onChangeLike}>{like}</button>} */}
                     <h5 className="card-title">{props.album.albumName}</h5>
                     <p className="card-subtitle text-body-secondary">{props.album.username}</p>
                     <p className="card-text">{likeCounter} Liked</p>
@@ -59,7 +59,13 @@ export default function HomeCard(props) {
                     </div>
                     }               
                     <p className="card-text"><small className="text-muted">Created: {month[date.getUTCMonth()] + " " + date.getUTCDate() + ", " + date.getUTCFullYear()}</small></p>
-                    <Link to={"/album/" + props.album._id} className="btn btn-primary" album={props.album}>Open</Link>
+                    <Link to={"/album/" + props.album._id} className="btn btn-primary me-1" album={props.album}>Open</Link>
+                    {props.user.status == "loggedin" && like == "Liked ❤️"
+                            && <button onClick={onChangeLike} className="btn btn-secondary">{like}</button>
+                    }
+                    {props.user.status == "loggedin" && like == "Like 🤍"
+                            && <button onClick={onChangeLike} className="btn btn-danger">{like}</button>
+                    }
                 </div>
         </div>
     )

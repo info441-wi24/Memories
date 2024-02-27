@@ -34,7 +34,7 @@ export default function Album(props) {
             .then((data) => {
                 setAlbum(data);
                 if (props.user.status == "loggedin" && data.likes.includes(props.user.userInfo.username)) {
-                    changeLike("Already Liked ❤️");
+                    changeLike("Liked ❤️");
                 } else {
                     changeLike("Like 🤍");
                 }
@@ -74,7 +74,7 @@ export default function Album(props) {
 
     function likeChange(event) {
         try {
-            if (like == "Already Liked ❤️") {
+            if (like == "Liked ❤️") {
                 changeLike("Like 🤍");
                 fetch(`/api/albums/unlike?id=${albumID}`, {
                     method: "POST",
@@ -82,7 +82,7 @@ export default function Album(props) {
                 })
                 .catch(error => console.log(error));
             } else {
-                changeLike("Already Liked ❤️");
+                changeLike("Liked ❤️");
                 fetch(`/api/albums/like?id=${albumID}`, {
                     method: "POST",
                     body: JSON.stringify({ albumID: albumID }),
@@ -147,7 +147,7 @@ export default function Album(props) {
                         {props.user.status == "loggedin" && album.username == props.user.userInfo.username
                             && <button onClick={deleteAlbum} className="btn btn-primary mb-3 me-2">Delete 🗑️</button>
                         }
-                        {props.user.status == "loggedin" && like == "Already Liked ❤️"
+                        {props.user.status == "loggedin" && like == "Liked ❤️"
                             && <button onClick={likeChange} className="btn btn-secondary mb-3">{like}</button>
                         }
                         {props.user.status == "loggedin" && like == "Like 🤍"
