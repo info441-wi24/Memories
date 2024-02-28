@@ -34,11 +34,15 @@ router.post('/create', upload.any(), async (req, res) => { //any() just uploads 
       for (let file of files) {
         photoURLS.push(file.url);
       }
-
-      let tags = req.body.tags.split(",");
-      tags = tags.map((tag) => {
-        return "#" + tag;
-      });
+      
+      let tags = [];
+      if (req.body.tags != undefined && req.body.tags.length != 0) {
+        tags = req.body.tags.split(",");
+        tags = tags.map((tag) => {
+          return "#" + tag;
+        });
+      } 
+      
 
       let newAlbum = new req.models.Album({
         name: req.body.name,
