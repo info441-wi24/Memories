@@ -18,7 +18,7 @@ const authConfig = {
 		clientId: "a89e730b-bb1a-4200-9de8-e4948d22ae7d",
         authority: "https://login.microsoftonline.com/f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
         clientSecret: "_uE8Q~wW9jLorrtpKaH-f660gLdAEpe9sPwRBa.7",
-        redirectUri: "http://localhost:3000/redirect"
+        redirectUri: "/redirect"//"http://localhost:3000/redirect"
 	},
     system: {
         loggerOptions: {

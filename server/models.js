@@ -7,7 +7,8 @@ await mongoose.connect("mongodb+srv://jnguyen860:12345678a@memories.hqiftv7.mong
 
 const userSchema = mongoose.Schema({
     username: String,
-    biography: String
+    biography: String,
+    profilePhoto: String
 })
 
 const albumSchema = mongoose.Schema({
