@@ -18,7 +18,7 @@ const authConfig = {
 		clientId: "a89e730b-bb1a-4200-9de8-e4948d22ae7d",
         authority: "https://login.microsoftonline.com/f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
         clientSecret: "_uE8Q~wW9jLorrtpKaH-f660gLdAEpe9sPwRBa.7",
-        redirectUri: "http://localhost:3000/redirect"
+        redirectUri: "http://localhost:3000/redirect" //change explicitly to "https://yourmemories.azurewebsites.net/redirect" later... if that doesn't work, go back to "/redirect"
 	},
     system: {
         loggerOptions: {
@@ -67,7 +67,7 @@ app.get(
 	'/signin',
 	(req, res, next) => {
 		return req.authContext.login({
-			postLoginRedirectUri: "http://localhost:3000/", // redirect here after login
+			postLoginRedirectUri: "http://localhost:3000/", // redirect here after login... change to "https://yourmemories.azurewebsites.net/" later
 		})(req, res, next);
 	}
 );
@@ -76,7 +76,7 @@ app.get(
 	'/signout',
 	(req, res, next) => {
 		return req.authContext.logout({
-			postLogoutRedirectUri: "http://localhost:3000/", // redirect here after logout
+			postLogoutRedirectUri: "http://localhost:3000/", // redirect here after logout... change to "https://yourmemories.azurewebsites.net/" later
 		})(req, res, next);
 	}
 );
