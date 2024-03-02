@@ -63,7 +63,7 @@ export default function Profile(props) {
                 }
             })
             .catch((error) => console.log(error));
-    }, [props.user]);
+    }, [param]);
 
 
     if (name != null) {
