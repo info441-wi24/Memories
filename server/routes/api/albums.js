@@ -86,7 +86,7 @@ router.get("/view", async (req, res) => {
       let albumsMatch = [];
       for (let album of allAlbums) {
 
-        if (album.albumName.toLowerCase().includes(albumSearch.toLowerCase()) || album.username.toLowerCase().includes(albumSearch.toLowerCase())) {
+        if (album.albumName.toLowerCase().includes(albumSearch.toLowerCase()) || ("@" + album.username.toLowerCase()).includes(albumSearch.toLowerCase())) {
           albumsMatch.push(album);
         }
 
