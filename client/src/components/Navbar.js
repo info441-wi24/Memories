@@ -20,6 +20,11 @@ export default function Navbar(props) {
         props.changeSearchBar("");
     }
 
+    let username;
+    if (props.user.userInfo != undefined) {
+        username = props.user.userInfo.username.split("@")[0];
+    }
+    
 
     return (
         <>
@@ -41,7 +46,7 @@ export default function Navbar(props) {
                                         <Link className="nav-link" to="/create" href="#">Create</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" to="/profile" href="#">Profile</Link>
+                                        <Link className="nav-link" to={"/profile/" + username} href="#">Profile</Link>
                                        
                                     </li>
                                     <li className="nav-item">

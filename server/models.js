@@ -7,6 +7,7 @@ await mongoose.connect("mongodb+srv://jnguyen860:12345678a@memories.hqiftv7.mong
 
 const userSchema = mongoose.Schema({
     username: String,
+    name: String,
     biography: String,
     profilePhoto: String
 })
@@ -24,6 +25,7 @@ const albumSchema = mongoose.Schema({
 
 const commentSchema = mongoose.Schema({
     username: String,
+    email: String,
     comment: String,
     album: String,
     uploadDate: { type: Date, default: Date.now }

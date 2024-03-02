@@ -177,9 +177,9 @@ router.post("/comment", async (req, res) => {
     if (!req.session.isAuthenticated) {
       res.json({ status: "error", error: "not logged in" }).status(401);
     }
-
     let newComment = new req.models.Comment({
       username: req.body.username,
+      email: req.body.email,
       comment: req.body.comment,
       album: req.body.album,
     });

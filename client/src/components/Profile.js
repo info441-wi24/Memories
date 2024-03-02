@@ -2,26 +2,28 @@ import React, { useState, useEffect } from "react";
 import HomeCard from "./HomeCard";
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import { useRef } from 'react';
 // import Warper from './Warper';
 
 
 export default function Profile(props) {
 
+    const [name, setName] = useState("");
     const [userBio, setUserBio] = useState("");
     const [profilePhoto, setProfilePhoto] = useState("");
     const [albums, setAlbums] = useState("");
+    const param = useParams();
     const redirect = useNavigate();
-
-    console.log(props);
     
-    if (props.user == undefined || props.user.status == "loggedout") {
-        redirect("/")
+    // if (props.user == undefined || props.user.status == "loggedout") {
+    //     redirect("/")
+    // }
+
+    let user_id = "";
+    if (param.id != undefined) {
+        user_id = param.id.split("@")[0];
     }
-
-
-    const user_id = props.user.userInfo.username.split("@")[0];
-
 
     function changeLike(albumID) {
         try {
@@ -36,45 +38,43 @@ export default function Profile(props) {
 
 
     useEffect(() => {
-        console.log("use effect");
         let photoAlbums = [];
-        fetch(`/api/profile?username=${props.user.userInfo.username}`)
+        fetch(`/api/profile?username=${param.id}@uw.edu`)
             .then((res) => {
-                console.log(res);
                 return res.json();
             })
             .then((data) => {
-                console.log("worked");
                 photoAlbums = data.albums.toReversed().map((album, index) => {
                     return (
-                        <HomeCard
-                            key={index}
-                            album={album}
-                            changeLike={changeLike}
-                            user={props.user}
-                        />
+                        <div key={index} className="col-lg-4 mb-4">
+                            <HomeCard
+                                key={index}
+                                album={album}
+                                changeLike={changeLike}
+                                user={props.user}
+                            />
+                        </div>
                     );
                 });
+                console.log(data);
                 setAlbums(photoAlbums);
-                setUserBio(data.user[0].biography)
-                setProfilePhoto(data.user[0].profilePhoto)
+                setName(data.user.name.split(" ")[0]);
+                setUserBio(data.user.biography);
+                // setProfilePhoto(data.user.profilePhoto);
             })
             .catch((error) => console.log(error));
     }, [props.user]);
 
 
 
-
-
-
     return (
         <div className="profile-album">
             <h1 className="page-heading">
-                {props.user.userInfo.name.split(" ")[0]}'s Album
+                {name}'s Albums
             </h1>
 
-            <div className="container">
-                <div className="profile">
+            <div className="container row">
+                <div className="profile col-4">
                     <div className="photo-username">
                         <img src={profilePhoto} width="300" height="300"></img>
                         <p className="profile-username">
@@ -95,9 +95,9 @@ export default function Profile(props) {
                     </div>
                 </div>
 
-                <div className="albums">
-                    <div className="profile-card row col-lg-3 col-md-6 col-sm-12s">
-                        {albums}
+                <div className="albums col-8">
+                    <div className="profile-card cards row d-flex d-wrap">
+                            {albums}
                     </div>
                 </div>
             </div>

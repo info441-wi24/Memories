@@ -14,7 +14,11 @@ export default function Comment(props) {
             <div className="card-body">
               <div className="d-flex flex-start">
                 <div>
-                  <h6 className="fw-bold text-primary mb-1">{comment.username}</h6>
+                  {comment.email != undefined ? 
+                  <Link className="text-primary text-decoration-none" to={"/profile/" + comment.email.split("@")[0]}>
+                    <h6 className="fw-bold text-primary mb-1">{comment.username}</h6>
+                  </Link> : <h6 className="fw-bold text-primary mb-1">{comment.username}</h6>
+                  }
                   <p className="text-muted small mb-0">
                     {date}
                   </p>

@@ -40,7 +40,7 @@ function App() {
         <Route index element={<Home searchTerm={searchTerm} user={user}/>} />
         <Route path="/create" element={<Create  user={user}/>}/>
         <Route path="/album/:id" element={<Album user={user}/>}/>
-        <Route path="/profile" element={<Profile user={user}/>}/>
+        <Route path="/profile/:id" element={<Profile user={user}/>}/>
         <Route path="/edit" element={<EditProfile user={user}/>}/>
       </Routes>
     </>

@@ -28,7 +28,7 @@ const authConfig = {
             piiLoggingEnabled: false,
             logLevel: 3,
         }
-    }
+    },
 };
 
 const __filename = fileURLToPath(import.meta.url);
@@ -68,7 +68,8 @@ app.get(
 	(req, res, next) => {
 		return req.authContext.login({
 			postLoginRedirectUri: "http://localhost:3000/", // redirect here after login... change to "https://yourmemories.azurewebsites.net/" later
-		})(req, res, next);
+		})
+        (req, res, next);
 	}
 );
 

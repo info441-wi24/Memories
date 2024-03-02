@@ -9,21 +9,19 @@ router.get("/", async (req, res) => {
 
             const existingUser = await req.models.User.findOne({ username: req.query.username });
             console.log("existing user", existingUser);
-            if (!existingUser) {
-                let newUser = new req.models.User({
-                    username: req.query.username
-                }) 
-                newUser.save()
-            }
-
-            console.log(req.query)
+            // if (!existingUser) {
+            //     let newUser = new req.models.User({
+            //         username: req.query.username
+            //     }) 
+            //     newUser.save()
+            // }
             let allAlbums = await req.models.Album.find({ username: req.query.username  });  // Filter by user
-            let userData = await req.models.User.find({ username: req.query.username });
+            // let userData = await req.models.User.find({ username: req.query.username });
 
             // Combine the album and user data
             let combinedData = {
                 albums: allAlbums,
-                user: userData
+                user: existingUser
             };
 
             res.json(combinedData).status(201);
