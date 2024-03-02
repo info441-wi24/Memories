@@ -86,11 +86,11 @@ export default function Profile(props) {
                             <p><strong>Biography</strong></p>
                             <p className="user-bio">{userBio ? userBio : "This user does not have a biography."}</p>
                         </div>
-                        {/* {props.user.status == "loggedin" && props.user.userInfo.username == param.id + "@uw.edu"  && */}
+                        {props.user.status == "loggedin" && props.user.userInfo.username == param.id + "@uw.edu"  &&
                         <div className="bio-container">
                             <Link to="/edit" className="bio-btn"><p>Edit Profile</p></Link>
                         </div>
-                        {/* } */}
+                        } 
                     </div>
                 </div>
 
