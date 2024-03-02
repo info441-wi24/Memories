@@ -40,6 +40,7 @@ export default function Profile(props) {
                 return res.json();
             })
             .then((data) => {
+                console.log(data);
                 if (data.user != null) {
                     photoAlbums = data.albums.toReversed().map((album, index) => {
                         return (
@@ -57,11 +58,13 @@ export default function Profile(props) {
                     setName(data.user.name.split(" ")[0]);
                     setUserBio(data.user.biography);
                 } else {
+                    console.log(data);
                     setName(null);
                 }
             })
             .catch((error) => console.log(error));
     }, [props.user]);
+
 
     if (name != null) {
     return (
@@ -83,13 +86,11 @@ export default function Profile(props) {
                             <p><strong>Biography</strong></p>
                             <p className="user-bio">{userBio ? userBio : "This user does not have a biography."}</p>
                         </div>
-                        {props.user.userInfo.username == param.id + "@uw.edu"  &&
+                        {/* {props.user.status == "loggedin" && props.user.userInfo.username == param.id + "@uw.edu"  && */}
                         <div className="bio-container">
                             <Link to="/edit" className="bio-btn"><p>Edit Profile</p></Link>
                         </div>
-                        }
-
-
+                        {/* } */}
                     </div>
                 </div>
 
