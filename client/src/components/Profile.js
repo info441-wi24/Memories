@@ -15,10 +15,6 @@ export default function Profile(props) {
     const [albums, setAlbums] = useState("");
     const param = useParams();
     const redirect = useNavigate();
-    
-    // if (props.user == undefined || props.user.status == "loggedout") {
-    //     redirect("/")
-    // }
 
     let user_id = "";
     if (param.id != undefined) {
@@ -44,29 +40,30 @@ export default function Profile(props) {
                 return res.json();
             })
             .then((data) => {
-                photoAlbums = data.albums.toReversed().map((album, index) => {
-                    return (
-                        <div key={index} className="col-lg-4 mb-4">
-                            <HomeCard
-                                key={index}
-                                album={album}
-                                changeLike={changeLike}
-                                user={props.user}
-                            />
-                        </div>
-                    );
-                });
-                console.log(data);
-                setAlbums(photoAlbums);
-                setName(data.user.name.split(" ")[0]);
-                setUserBio(data.user.biography);
-                // setProfilePhoto(data.user.profilePhoto);
+                if (data.user != null) {
+                    photoAlbums = data.albums.toReversed().map((album, index) => {
+                        return (
+                            <div key={index} className="col-lg-4 mb-4">
+                                <HomeCard
+                                    key={index}
+                                    album={album}
+                                    changeLike={changeLike}
+                                    user={props.user}
+                                />
+                            </div>
+                        );
+                    });
+                    setAlbums(photoAlbums);
+                    setName(data.user.name.split(" ")[0]);
+                    setUserBio(data.user.biography);
+                } else {
+                    setName(null);
+                }
             })
             .catch((error) => console.log(error));
     }, [props.user]);
 
-
-
+    if (name != null) {
     return (
         <div className="profile-album">
             <h1 className="page-heading">
@@ -83,13 +80,14 @@ export default function Profile(props) {
                     </div>
                     <div className="biography">
                         <div className="about-me">
-                            <p><strong>About Me!</strong></p>
-                            <p className="user-bio">{userBio ? userBio : "Start writing about yourself!"}</p>
+                            <p><strong>Biography</strong></p>
+                            <p className="user-bio">{userBio ? userBio : "This user does not have a biography."}</p>
                         </div>
-
+                        {props.user.userInfo.username == param.id + "@uw.edu"  &&
                         <div className="bio-container">
                             <Link to="/edit" className="bio-btn"><p>Edit Profile</p></Link>
                         </div>
+                        }
 
 
                     </div>
@@ -102,5 +100,13 @@ export default function Profile(props) {
                 </div>
             </div>
         </div>
-    );
+    )} else if (name == null) {
+            return(
+            <>
+            <div className="profile-album">
+                <h1 className="page-heading">This user doesn't exist!</h1>
+            </div>
+            </>
+            )
+    }
 }
