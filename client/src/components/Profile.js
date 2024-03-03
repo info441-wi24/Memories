@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import HomeCard from "./HomeCard";
-import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import { useRef } from 'react';
@@ -15,10 +14,12 @@ export default function Profile(props) {
     const [changeProfilePhoto, setChangeProfilePhoto] = useState();
     const [previewUrl, setPreviewUrl] = useState("");
     const [albums, setAlbums] = useState("");
+    const [realName, setRealName] = useState("");
     const param = useParams();
     const [changeUserBio, setChangeUserBio] = useState("");
     const aRef = useRef(null); //reference to file input;ref={aRef}
-    const redirect = useNavigate();
+    const [alert, setAlert] = useState("");
+
 
     let user_id = "";
     if (param.id != undefined) {
@@ -61,6 +62,7 @@ export default function Profile(props) {
                     setName(data.user.name.split(" ")[0]);
                     setUserBio(data.user.biography);
                     setProfilePhoto(data.user.profilePhoto);
+                    setRealName(data.user.name);
                 } else {
                     setName(null);
                 }
@@ -86,7 +88,8 @@ export default function Profile(props) {
             if (changeUserBio.length > 0) {
                 setUserBio(changeUserBio);
                 setChangeUserBio(""); 
-            }         
+            }
+            setAlert("Your information has been saved!")
         }).catch(error => console.log(error))
     }
 
@@ -121,26 +124,28 @@ export default function Profile(props) {
                 <div className="profile col-4">
                     <div className="photo-username">
                         {profilePhoto != undefined ? <img src={profilePhoto} width="300" height="300"/> : <img src={"https://info441photoalbum.blob.core.windows.net/images/981d6b2e0ccb5e968a0618c8d47671da.jpg"} width="300" height="300"/>}
-                        <h2 className="profile-username">
-                            <strong>@{user_id}</strong>
-                        </h2>
+                        <h2 className="profile-name pt-3">{realName}</h2>
+                        <h3 className="profile-username">
+                            @{user_id}
+                        </h3>
+                        <h4>{albums.length + " posts"}</h4>
                     </div>
                     <div className="biography">
                         <div className="about-me">
-                            <h3><strong>Biography</strong></h3>
+                            {/* <h3><strong>Biography</strong></h3> */}
                             <p>{userBio ? userBio : "This user does not have a biography."}</p>
                         </div>
                         {props.user.status == "loggedin" && props.user.userInfo.username == param.id + "@uw.edu"  &&
                         <div className="">
                             <h4 className="mt-5">Edit Biography: </h4>
-                            <textarea className="form-control" value={changeUserBio} onChange={(event) => {
+                            <textarea className="form-control" value={changeUserBio} rows={6} onChange={(event) => {
                                 setChangeUserBio(event.target.value);
                             }} />
                             <h4 className="mt-5">Edit Profile Picture: </h4>
                             <div className="mb-3">
                                 {/* <label htmlFor="fileUpload" className="form-label"><strong>Upload Profile</strong></label> */}
                                 <div className="mb-3">
-                                    <input ref={aRef} type="file" title=" " className="form-control-file" onChange={photosChange} accept="image/*" />
+                                    <input ref={aRef} type="file" title=" " className="custom-file-input" onChange={photosChange} accept="image/*" />
                                 </div>
                             </div>
                             {changeProfilePhoto && <>
@@ -152,6 +157,7 @@ export default function Profile(props) {
                             }
                             
                             <button type="button" className="btn btn-primary mt-2" onClick={handleSubmit}>Save</button>
+                            <p>{alert}</p>
                         </div>
                         } 
                     </div>

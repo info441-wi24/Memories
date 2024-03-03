@@ -144,7 +144,7 @@ export default function Album(props) {
                     <div className="col-4">
                         <h1>{album.albumName}</h1>
                         {album.username != undefined &&
-                        <Link className="text-primary text-decoration-none" to={"/profile/" + album.username.split("@")[0]}>
+                        <Link className="user text-decoration-none" to={"/profile/" + album.username.split("@")[0]}>
                             <h2 className="fs-4">@{album.username.split("@")[0]}</h2>
                         </Link>
                         }

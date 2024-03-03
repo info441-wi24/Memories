@@ -15,9 +15,9 @@ export default function Comment(props) {
               <div className="d-flex flex-start">
                 <div>
                   {comment.email != undefined ? 
-                  <Link className="text-primary text-decoration-none" to={"/profile/" + comment.email.split("@")[0]}>
-                    <h6 className="fw-bold text-primary mb-1">{comment.username}</h6>
-                  </Link> : <h6 className="fw-bold text-primary mb-1">{comment.username}</h6>
+                  <Link className="user text-decoration-none" to={"/profile/" + comment.email.split("@")[0]}>
+                    <h6 className="fw-bold mb-1">{"@" + comment.email.split("@")[0]}</h6>
+                  </Link> : <h6 className="fw-bold user mb-1">{comment.username}</h6>
                   }
                   <p className="text-muted small mb-0">
                     {date}

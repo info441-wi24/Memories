@@ -42,11 +42,10 @@ router.post("/", upload.single('profilePhoto'), async (req, res) => {
     try {
         if (!req.session.isAuthenticated) {
             res.json({ status: "error", error: "not logged in" }).status(401);
+        } else if (req.session.account.username != req.body.username) {
+            res.json({ status: "error", error: "You cannot change another person's account information." }).status(401);
         }
-
         else {
-            console.log(req.file != undefined);
-            console.log(biography.length > 0);
             if (biography.length > 0 && req.file != undefined) {
                 await req.models.User.updateOne({ username }, { $set: { biography: biography, profilePhoto: req.file.url }  });
                 res.json({ status: "success", action: "update" });
