@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
         
 
     } catch (error) {
-        console.error(error);
+        console.log(error);
         res.status(500).json({ status: "erorr", error: error.message });
     }
 
@@ -38,7 +38,6 @@ router.get("/", async (req, res) => {
 router.post("/", upload.single('profilePhoto'), async (req, res) => {
     const username = req.body.username;
     const biography = req.body.biography;
-    console.log(req.body);
     try {
         if (!req.session.isAuthenticated) {
             res.json({ status: "error", error: "not logged in" }).status(401);

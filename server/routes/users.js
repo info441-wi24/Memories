@@ -7,7 +7,6 @@ router.get("/myInfo", async (req, res) => {
         if (!req.session.isAuthenticated) {
             res.json({ status: "loggedout" });
         } else {
-            console.log(req.session.account);
             if (req.session.account != null) {
                 const existingUser = await req.models.User.findOne({ username: req.session.account.username });
                 if (!existingUser) {

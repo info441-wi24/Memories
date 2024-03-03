@@ -25,13 +25,24 @@ export default function Profile(props) {
     if (param.id != undefined) {
         user_id = param.id.split("@")[0];
     }
-
-    function changeLike(albumID) {
+   
+    function changeLike(albumID, status) {
         try {
-            fetch(`/api/albums/like?id=${albumID}`, {
-                method: "POST",
-                body: JSON.stringify({ albumID: albumID }),
-            }).catch((error) => console.log(error));
+            if (status == "like") {
+                console.log("like");
+                fetch(`/api/albums/like?id=${albumID}`, {
+                    method: "POST",
+                    body: JSON.stringify({albumID: albumID}),
+                })
+                .catch(error => console.log(error))   
+            } else if (status == "unlike") {
+                console.log("unlike");
+                fetch(`/api/albums/unlike?id=${albumID}`, {
+                    method: "POST",
+                    body: JSON.stringify({albumID: albumID}),
+                })
+                .catch(error => console.log(error))   
+            }
         } catch (error) {
             console.log(error);
         }
@@ -132,7 +143,6 @@ export default function Profile(props) {
                     </div>
                     <div className="biography">
                         <div className="about-me">
-                            {/* <h3><strong>Biography</strong></h3> */}
                             <p>{userBio ? userBio : "This user does not have a biography."}</p>
                         </div>
                         {props.user.status == "loggedin" && props.user.userInfo.username == param.id + "@uw.edu"  &&
@@ -156,7 +166,7 @@ export default function Profile(props) {
                             </>
                             }
                             
-                            <button type="button" className="btn btn-primary mt-2" onClick={handleSubmit}>Save</button>
+                            <button type="button" className="btn btn-primary mt-2 mb-4" onClick={handleSubmit}>Save</button>
                             <p>{alert}</p>
                         </div>
                         } 
