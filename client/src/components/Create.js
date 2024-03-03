@@ -129,11 +129,12 @@ export default function Create(props) {
 
     return (
         <div className="container">
-            <h1 className="mt-4 mb-5">Create New Album</h1>
-            <div className="row">
-                <div className="createBox d-flex mb-5 col-4">
+            <h1 className="mt-4 mb-5">Create</h1>
+            <div className="create-album row">
+                <div className="create-box b-5 col-4">
                     <div>
                         <form onSubmit={submitAction}>
+                            <h2 className="mb-4 text-center">Create New Album!</h2>
                             <div className="mb-3">
                                 <label htmlFor="albumName" className="form-label">Photo Album Name</label>
                                 <input type="text" className="form-control" onChange={albumNameChange} value={albumName} placeholder="Kyoto Adventures" required />
@@ -163,7 +164,7 @@ export default function Create(props) {
                             <div className="mb-3">
                                 <input ref={aRef} type="file" className="form-control-file" onChange={photosChange} accept="image/*" multiple required />
                             </div>
-                            <button type="submit" className="btn btn-primary">Submit</button>
+                            <button type="submit" className="btn btn-dark">Submit</button>
                             <p className="alert">{alert}</p>
                         </form>
                     </div>

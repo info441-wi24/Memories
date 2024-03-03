@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import Comment from './Comment';
 import Tag from "./Tag";
 import PhotoAlbum from "react-photo-album";
@@ -103,7 +104,7 @@ export default function Album(props) {
         event.stopPropagation();
         fetch('/api/albums/comment', {
             method: 'POST',
-            body: JSON.stringify({ comment: commentInput, album: albumID, username: props.user.userInfo.name }),
+            body: JSON.stringify({ comment: commentInput, album: albumID, username: props.user.userInfo.name, email: props.user.userInfo.username }),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -142,10 +143,14 @@ export default function Album(props) {
                 <div className="d-flex row">
                     <div className="col-4">
                         <h1>{album.albumName}</h1>
-                        <h2 className="fs-4">{album.username}</h2>
+                        {album.username != undefined &&
+                        <Link className="user text-decoration-none" to={"/profile/" + album.username.split("@")[0]}>
+                            <h2 className="fs-4">@{album.username.split("@")[0]}</h2>
+                        </Link>
+                        }
                         <p>{album.description}</p>
                         {props.user.status == "loggedin" && album.username == props.user.userInfo.username
-                            && <button onClick={deleteAlbum} className="btn btn-primary mb-3 me-2">Delete 🗑️</button>
+                            && <button onClick={deleteAlbum} className="btn btn-dark mb-3 me-2">Delete 🗑️</button>
                         }
                         {props.user.status == "loggedin" && like == "Liked ❤️"
                             && <button onClick={likeChange} className="btn btn-secondary mb-3">{like}</button>

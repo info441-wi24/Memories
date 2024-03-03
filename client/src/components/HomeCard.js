@@ -52,9 +52,11 @@ export default function HomeCard(props) {
                 <div className="card-body">
                     {/* {props.user != undefined && props.user.status == "loggedin" && <button className="btn btn-like like" onClick={onChangeLike}>{like}</button>} */}
                     <h5 className="card-title">{props.album.albumName}</h5>
-                    <p className="card-subtitle text-body-secondary">{props.album.username}</p>
+                    <Link className="text-primary text-decoration-none" to={"/profile/" + props.album.username.split("@")[0]}>
+                        <p className="card-subtitle card-user">{"@" + props.album.username.split("@")[0]}</p>
+                    </Link>
                     <p className="card-text">{likeCounter} Liked</p>
-                    {props.album.tags.length !== 0 && <div className="homeCardTags">
+                    {props.album.tags.length !== 0 && <div className="homeCardTags mb-3">
                         {tempTags}
                     </div>
                     }               

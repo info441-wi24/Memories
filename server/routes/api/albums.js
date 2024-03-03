@@ -34,11 +34,15 @@ router.post('/create', upload.any(), async (req, res) => { //any() just uploads 
       for (let file of files) {
         photoURLS.push(file.url);
       }
-
-      let tags = req.body.tags.split(",");
-      tags = tags.map((tag) => {
-        return "#" + tag;
-      });
+      
+      let tags = [];
+      if (req.body.tags != undefined && req.body.tags.length != 0) {
+        tags = req.body.tags.split(",");
+        tags = tags.map((tag) => {
+          return "#" + tag;
+        });
+      } 
+      
 
       let newAlbum = new req.models.Album({
         name: req.body.name,
@@ -89,7 +93,7 @@ router.get("/view", async (req, res) => {
       let albumsMatch = [];
       for (let album of allAlbums) {
 
-        if (album.albumName.toLowerCase().includes(albumSearch.toLowerCase()) || album.username.toLowerCase().includes(albumSearch.toLowerCase())) {
+        if (album.albumName.toLowerCase().includes(albumSearch.toLowerCase()) || ("@" + album.username.toLowerCase()).includes(albumSearch.toLowerCase())) {
           albumsMatch.push(album);
         }
 
@@ -180,9 +184,9 @@ router.post("/comment", async (req, res) => {
     if (!req.session.isAuthenticated) {
       res.json({ status: "error", error: "not logged in" }).status(401);
     }
-
     let newComment = new req.models.Comment({
       username: req.body.username,
+      email: req.body.email,
       comment: req.body.comment,
       album: req.body.album,
     });

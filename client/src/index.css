@@ -1,6 +1,25 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
 }
+
+h1 {
+  font-weight: 700;
+}
+
+
+.btn-primary, .btn-primary a {
+  background-color:#F28123;
+  --bs-btn-active-bg:#d77626;
+  color: white;
+  border-width: 0;
+}
+
+.btn-primary:hover {
+  background-color:#d77626;
+}
+
 
 
 .imgPreview {
@@ -21,21 +40,28 @@
   max-height: 200px; */
 }
 
+.card-title {
+  font-weight: 600;
+}
+
 .thumbnail {
   background-size: cover;
 }
 
-.createBox {
-  gap: 24px;
+.create-box {
+  padding-top: 2rem;
+  flex-basis: 30%;
+  background-color: #a2959554;
+  border-radius: 20px;
+  max-height: 600px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.left {
-  height: 400px;
-  display: block;
-  width: 50%;
-  background-color: green;
-  overflow-y: scroll;
+.create-box label {
+  font-weight: 600;
 }
+
+
 .right {
   height: 500px;
   overflow-y: scroll;
@@ -138,8 +164,177 @@
   gap: 8px;
 }
 
+input[type='file'] {
+  color: rgba(0, 0, 0, 0)
+}
+
 @media (min-width: 1400px) {
   .container {
     max-width: 1440px;
   }
+}
+
+
+/* profile Page */
+
+/* footer,
+.page-header{
+    text-align: center;
+} */
+
+.profile-album .page-heading {
+  text-align: center;
+  margin: 2rem auto 2rem auto;
+}
+
+.profile-album .container {
+  display: flex;
+  /* or inline-flex */
+  /* border: 3px solid green; */
+}
+
+.profile {
+  width: 350px; /* would be better with flex for flexibility */
+  margin-bottom: 2rem;
+  margin-right: 2rem;
+  margin-left: 3rem;
+  background-color: #fff1e6;
+  /* border: 3px solid #ffffff; */
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.profile img {
+  margin: 0 auto;
+  margin-top: 1rem;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+}
+
+.profile-username {
+  color: rgb(167, 2, 2);
+  padding-top: 0px;
+  padding-bottom: 10px; /* Add padding for better aesthetics */
+}
+
+.profile-name {
+  color: black;
+  font-weight: 700;
+}
+
+.photo-username, .profile-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  text-align: center;
+  margin: 1.5rem;
+  margin-bottom: 0;
+  /* border: 3px solid green; */
+}
+
+.biography {
+  margin: 1rem;
+}
+
+.biography p {
+  font-weight: 300;
+}
+
+.bio-input {
+margin: 0 1rem 1rem 0; 
+/* max-height: 4rem; */
+}
+
+.bio-container {
+display: flex;
+justify-content: flex-end;
+margin-right: 1rem;
+
+}
+
+.user-bio {
+background-color: rgba(255, 255, 255, 0.5);
+padding: 10px;
+border-radius: 10px;
+border: solid lightgray;
+text-align: left;
+}
+
+.bio-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: 0;
+  background-color: #0d6efd;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  width: 10rem;
+  height: 2.5rem;
+  padding: 0 24px;
+}
+
+.bio-btn:hover {
+  background-color: #085fd7; 
+}
+
+.bio-btn p {
+margin: 0;
+}
+
+.user, .card-user {
+  color: rgb(167, 2, 2);
+}
+/* .albums {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2rem;
+} */
+
+.album-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 1.5rem;
+  margin-bottom: 0;
+}
+
+.album-create-btn {
+  display: inline-block;
+  outline: 0;
+  background-color: white;
+  color: black;
+  border: solid;
+  border-color: #A3C1AD;
+  border-radius: 20px;
+  width: 8rem;
+  height: 2.5rem;
+  padding: 0 24px;
+  
+}
+
+.album-create-btn:hover {
+  background-color: #A3C1AD; 
+  color: white;
+}
+
+.album-heading {
+  margin-left: 1rem
+}
+
+/* album cards */
+
+.card {
+  margin-bottom: 1rem;
+  height: 100%;
+}
+
+.img-test {
+padding: 0;
+}
+
+.alert {
+padding-left: 0;
 }

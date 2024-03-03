@@ -20,6 +20,11 @@ export default function Navbar(props) {
         props.changeSearchBar("");
     }
 
+    let username;
+    if (props.user.userInfo != undefined) {
+        username = props.user.userInfo.username.split("@")[0];
+    }
+    
 
     return (
         <>
@@ -35,19 +40,23 @@ export default function Navbar(props) {
                                 <Link className="nav-link" aria-current="page" to="/" onClick={changeHome}>Gallery</Link>
                             </li>
                             {props.user == "undefined" || props.user.status == "loggedout" && <a className="nav-link" href="http://localhost:3001/signin">Login</a>}
-                            {props.user.status == "loggedin" &&  
-                            <>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/create" href="#">Create</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="http://localhost:3001/signout">Logout</a>
-                                </li>
-                            </>}
+                            {props.user.status == "loggedin" &&
+                                <>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/create" href="#">Create</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to={"/profile/" + username} href="#">Profile</Link>
+                                       
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="http://localhost:3001/signout">Logout</a>
+                                    </li>
+                                </>}
                         </ul>
                         <form className="d-flex" role="search" onSubmit={buttonSubmit}>
-                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={changeTerm} value={searchTerm}/>
-                                <button className="btn btn-outline-success" type="submit">Search</button>
+                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={changeTerm} value={searchTerm} />
+                            <button className="btn btn-outline-success" type="submit">Search</button>
                         </form>
                     </div>
                 </div>

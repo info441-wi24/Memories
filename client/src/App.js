@@ -4,6 +4,8 @@ import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Create from './components/Create';
 import Album from './components/Album';
+import Profile from './components/Profile';
+import EditProfile from './components/EditProfile'
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from "react";
@@ -38,6 +40,8 @@ function App() {
         <Route index element={<Home searchTerm={searchTerm} user={user}/>} />
         <Route path="/create" element={<Create  user={user}/>}/>
         <Route path="/album/:id" element={<Album user={user}/>}/>
+        <Route path="/profile/:id" element={<Profile user={user}/>}/>
+        <Route path="/edit" element={<EditProfile user={user}/>}/>
       </Routes>
     </>
   );
