@@ -164,7 +164,7 @@ export default function Create(props) {
                             <div className="mb-3">
                                 <input ref={aRef} type="file" className="form-control-file" onChange={photosChange} accept="image/*" multiple required />
                             </div>
-                            <button type="submit" className="btn btn-primary">Submit</button>
+                            <button type="submit" className="btn btn-dark">Submit</button>
                             <p className="alert">{alert}</p>
                         </form>
                     </div>

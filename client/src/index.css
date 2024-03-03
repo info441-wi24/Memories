@@ -9,6 +9,19 @@ h1 {
 }
 
 
+.btn-primary, .btn-primary a {
+  background-color:#F28123;
+  --bs-btn-active-bg:#d77626;
+  color: white;
+  border-width: 0;
+}
+
+.btn-primary:hover {
+  background-color:#d77626;
+}
+
+
+
 .imgPreview {
   max-width: 400px;
   max-height: 400px;
@@ -38,7 +51,7 @@ h1 {
 .create-box {
   padding-top: 2rem;
   flex-basis: 30%;
-  background-color: #fff1e6;
+  background-color: #a2959554;
   border-radius: 20px;
   max-height: 600px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;

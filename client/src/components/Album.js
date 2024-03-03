@@ -150,7 +150,7 @@ export default function Album(props) {
                         }
                         <p>{album.description}</p>
                         {props.user.status == "loggedin" && album.username == props.user.userInfo.username
-                            && <button onClick={deleteAlbum} className="btn btn-primary mb-3 me-2">Delete 🗑️</button>
+                            && <button onClick={deleteAlbum} className="btn btn-dark mb-3 me-2">Delete 🗑️</button>
                         }
                         {props.user.status == "loggedin" && like == "Liked ❤️"
                             && <button onClick={likeChange} className="btn btn-secondary mb-3">{like}</button>

@@ -166,7 +166,7 @@ export default function Profile(props) {
                             </>
                             }
                             
-                            <button type="button" className="btn btn-primary mt-2 mb-4" onClick={handleSubmit}>Save</button>
+                            <button type="button" className="btn btn-dark mt-2 mb-4" onClick={handleSubmit}>Save</button>
                             <p>{alert}</p>
                         </div>
                         } 
