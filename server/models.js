@@ -18,7 +18,9 @@ const albumSchema = mongoose.Schema({
     photos: [String],
     likes: [String],
     tags: [String],
-    uploadDate: { type: Date, default: Date.now }
+    uploadDate: { type: Date, default: Date.now },
+    isPrivate: Boolean,
+    invitedUsers: [String]
 });
 
 const commentSchema = mongoose.Schema({

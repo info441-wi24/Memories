@@ -47,7 +47,9 @@ router.post('/create', upload.any(), async (req, res) => { //any() just uploads 
         description: req.body.albumDescription,
         tags: tags,
         photos: photoURLS,
-        likes: []
+        likes: [],
+        isPrivate: false,
+        invitedUsers: []
       }) //date is already placed in because of model
 
       newAlbum.save()
@@ -76,7 +78,12 @@ router.get("/view", async (req, res) => {
   try {
     if (albumID) {
       let album = await req.models.Album.findById(albumID);
-      res.json(album).status(201);
+      if(album && !album.isPrivate || album.username === req.session.account.username || album.invitedUsers.includes(req.session.account.username)){
+        res.json(album).status(201);
+      }
+      else{
+        res.json({status:"no such album exists"}).status(400)
+      }
     } else if (albumSearch) {
       let allAlbums = await req.models.Album.find();
       let albumsMatch = [];
