@@ -1,6 +1,18 @@
 import express from 'express';
 var router = express.Router();
 
+import multer from 'multer';
+import MulterAzureStorage from 'multer-azure-storage';
+
+const connectionString = 'DefaultEndpointsProtocol=https;AccountName=info441photoalbum;AccountKey=I4btGGARHrjyqEIzQk2jREkKn854kdsTtjzCIzCs9Az8T4iXtWhwUsEXU8tsEgQNt4/xeqo8voZc+AStlwxsYA==;EndpointSuffix=core.windows.net';
+const upload = multer({
+  storage: new MulterAzureStorage({
+    azureStorageConnectionString: connectionString,
+    containerName: 'images',
+    containerSecurity: 'blob'
+  })
+});
+
 router.get("/", async (req, res) => {
     try {
             const existingUser = await req.models.User.findOne({ username: req.query.username });
@@ -23,21 +35,28 @@ router.get("/", async (req, res) => {
 });
 
 
-router.post("/", async (req, res) => {
+router.post("/", upload.single('profilePhoto'), async (req, res) => {
     const username = req.body.username;
     const biography = req.body.biography;
-    const profilePhoto = req.body.profilePhoto;
-    console.log("req.body")
-    console.log(req.body.profilePhoto)
-
+    console.log(req.body);
     try {
         if (!req.session.isAuthenticated) {
             res.json({ status: "error", error: "not logged in" }).status(401);
         }
+
         else {
-            await req.models.User.updateOne({ username }, { $set: { biography } }, { $set: { profilePhoto } });
-            res.json({ status: "success", action: "update" });
-    
+            console.log(req.file != undefined);
+            console.log(biography.length > 0);
+            if (biography.length > 0 && req.file != undefined) {
+                await req.models.User.updateOne({ username }, { $set: { biography: biography, profilePhoto: req.file.url }  });
+                res.json({ status: "success", action: "update" });
+            } else if (req.file != undefined) {
+                await req.models.User.updateOne({ username }, { $set: { profilePhoto: req.file.url }  } );
+                res.json({ status: "success", action: "update" });
+            } else {
+                await req.models.User.updateOne({ username }, { $set: { biography: biography }  } );
+                res.json({ status: "success", action: "update" });
+            }    
         }
 
 

@@ -15,6 +15,7 @@ router.get("/myInfo", async (req, res) => {
                         username: req.session.account.username,
                         name: req.session.account.name,
                         biography: "",
+                        profilePhoto: "",
                     })
                     newUser.save()
                     .then((newUser) => {
