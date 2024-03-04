@@ -123,7 +123,6 @@ export default function Profile(props) {
         setChangeProfilePhoto(event.target.files[0]);
     }
 
-
     if (name != null) {
     return (
         <div className="profile-album">
@@ -134,7 +133,7 @@ export default function Profile(props) {
             <div className="container row">
                 <div className="profile col-4">
                     <div className="photo-username">
-                        {profilePhoto != undefined ? <img src={profilePhoto} width="300" height="300"/> : <img src={"https://info441photoalbum.blob.core.windows.net/images/981d6b2e0ccb5e968a0618c8d47671da.jpg"} width="300" height="300"/>}
+                        {(profilePhoto != undefined && profilePhoto.length != 0) ? <img src={profilePhoto} width="300" height="300"/> : <img src={"https://info441photoalbum.blob.core.windows.net/images/981d6b2e0ccb5e968a0618c8d47671da.jpg"} width="300" height="300"/>}
                         <h2 className="profile-name pt-3">{realName}</h2>
                         <h3 className="profile-username">
                             @{user_id}
