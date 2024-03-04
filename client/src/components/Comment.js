@@ -6,7 +6,7 @@ export default function Comment(props) {
     let comment = props.comment;
     const dateObj = new Date(props.comment.uploadDate);
     const month = ["January","February","March","April","May","June","July","August","September","October","November","December"]
-    const date = month[dateObj.getUTCMonth()] + " " + dateObj.getUTCDate() + ", " + dateObj.getUTCFullYear()
+    const date = month[dateObj.getMonth()] + " " + dateObj.getDate() + ", " + dateObj.getFullYear()
 
     return (
         <>

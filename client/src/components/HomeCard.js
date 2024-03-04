@@ -60,7 +60,7 @@ export default function HomeCard(props) {
                         {tempTags}
                     </div>
                     }               
-                    <p className="card-text"><small className="text-muted">Created: {month[date.getUTCMonth()] + " " + date.getUTCDate() + ", " + date.getUTCFullYear()}</small></p>
+                    <p className="card-text"><small className="text-muted">Created: {month[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear()}</small></p>
                     <Link to={"/album/" + props.album._id} className="btn btn-primary me-1" album={props.album}>Open</Link>
                     {props.user.status == "loggedin" && like == "Liked ❤️"
                             && <button onClick={onChangeLike} className="btn btn-secondary">{like}</button>
