@@ -14,7 +14,7 @@ export default function Create(props) {
     const aRef = useRef(null); //reference to file input;
     const [tagsContent, setTagsContent] = useState([]); //for sending to backend
     const [tags, setTags] = useState([]); //for frontend only
-    const [isPrivate, setIsPrivate] = useState([]);
+    const [isPrivate, setIsPrivate] = useState(false);
     const redirect = useNavigate();
 
     if (props.user == undefined || props.user.status == "loggedout") {
