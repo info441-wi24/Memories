@@ -14,6 +14,7 @@ export default function Create(props) {
     const aRef = useRef(null); //reference to file input;
     const [tagsContent, setTagsContent] = useState([]); //for sending to backend
     const [tags, setTags] = useState([]); //for frontend only
+    const [isPrivate, setIsPrivate] = useState([]);
     const redirect = useNavigate();
 
     if (props.user == undefined || props.user.status == "loggedout") {
@@ -91,6 +92,12 @@ export default function Create(props) {
         setTag("");
     }
 
+    function isPrivateChange(event){
+        let newValue = event.target.checked;
+        console.log(newValue);
+        setIsPrivate(newValue);
+    }
+
 
     function submitAction(event) {
         event.preventDefault();
@@ -101,6 +108,7 @@ export default function Create(props) {
         formData.append('albumName', albumName);
         formData.append('albumDescription', albumDescription);
         formData.append('tags', tagsContent);
+        formData.append('isPrivate', isPrivate);
         photos.forEach((photo, index) => {
             formData.append(`photo${index}`, photo);
         })
@@ -121,6 +129,7 @@ export default function Create(props) {
                 setAlbumDescription("");
                 setTagsContent([]);
                 setTags([]);
+                setIsPrivate(false);
                 aRef.current.value = null;
                 setAlert("Your album has been successfully uploaded!");
             }).catch((err) => console.log(err));
@@ -163,6 +172,10 @@ export default function Create(props) {
                             </div>
                             <div className="mb-3">
                                 <input ref={aRef} type="file" className="form-control-file" onChange={photosChange} accept="image/*" multiple required />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="isPrivate" className="form-label">Should this album be private?</label>
+                                <input type="checkbox" onChange={isPrivateChange} value={isPrivate} />
                             </div>
                             <button type="submit" className="btn btn-dark">Submit</button>
                             <p className="alert">{alert}</p>

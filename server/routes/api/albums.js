@@ -52,7 +52,7 @@ router.post('/create', upload.any(), async (req, res) => { //any() just uploads 
         tags: tags,
         photos: photoURLS,
         likes: [],
-        isPrivate: false,
+        isPrivate: req.body.isPrivate,
         invitedUsers: []
       }) //date is already placed in because of model
 
@@ -79,21 +79,28 @@ router.get("/view", async (req, res) => {
   // this one gets all the photo albums and displays on home screen UNLESS THERE IS A QUERY PARAMETER!!!
   let albumID = req.query.id;
   let albumSearch = req.query.search;
+  let username = "";
+  if(req.session.account){
+    username = req.session.account.username;
+  }
   try {
     if (albumID) {
       let album = await req.models.Album.findById(albumID);
-      if(album && !album.isPrivate || album.username === req.session.account.username || album.invitedUsers.includes(req.session.account.username)){
+      // !album.isPrivate || album.username === req.session.account.username || album.invitedUsers.includes(req.session.account.username)
+      if(album && checkIfAlbumShouldBeShown(album, username)){
         res.json(album).status(201);
       }
       else{
         res.json({status:"no such album exists"}).status(400)
       }
     } else if (albumSearch) {
-      let allAlbums = await req.models.Album.find();
+      let allAlbums = await req.models.Album.find({$or: [{ isPrivate: false }, { username: username }]});
       let albumsMatch = [];
       for (let album of allAlbums) {
 
-        if (album.albumName.toLowerCase().includes(albumSearch.toLowerCase()) || ("@" + album.username.toLowerCase()).includes(albumSearch.toLowerCase())) {
+        if (album.albumName.toLowerCase().includes(albumSearch.toLowerCase()) || ("@" + album.username.toLowerCase()).includes(albumSearch.toLowerCase())
+          // && checkIfAlbumShouldBeShown(album, req.session.account.username)
+        ) {
           albumsMatch.push(album);
         }
 
@@ -108,7 +115,7 @@ router.get("/view", async (req, res) => {
       }
       res.json(albumsMatch).status(201);
     } else {
-      let allAlbums = await req.models.Album.find();
+      let allAlbums = await req.models.Album.find({$or: [{ isPrivate: false }, { username: username }]});
       res.json(allAlbums).status(201);
     }
   } catch (error) {
@@ -211,7 +218,9 @@ router.get("/comment", async (req, res) => {
   }
 })
 
-
+function checkIfAlbumShouldBeShown(album, username){
+  return !album.isPrivate || album.username === username || album.invitedUsers.includes(username)
+}
 
 
 export default router;
