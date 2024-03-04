@@ -16,7 +16,13 @@ const upload = multer({
 router.get("/", async (req, res) => {
     try {
             const existingUser = await req.models.User.findOne({ username: req.query.username });
-            let allAlbums = await req.models.Album.find({ username: req.query.username  });  // Filter by user
+            let allAlbums;
+            if (req.session.isAuthenticated && req.session.account.username == req.query.username) {
+                allAlbums = await req.models.Album.find({ username: req.query.username  });  // Filter by user
+            } else {
+                allAlbums = await req.models.Album.find({ username: req.query.username, isPrivate: "false" });
+            }
+           
 
             // Combine the album and user data
             let combinedData = {

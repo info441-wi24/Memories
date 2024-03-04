@@ -91,7 +91,7 @@ router.get("/view", async (req, res) => {
         res.json(album).status(201);
       }
       else{
-        res.json({status:"no such album exists"}).status(400)
+        res.json({status:"error"}).status(400)
       }
     } else if (albumSearch) {
       let allAlbums = await req.models.Album.find({$or: [{ isPrivate: false }, { username: username }]});

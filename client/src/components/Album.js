@@ -34,6 +34,9 @@ export default function Album(props) {
             })
             .then((data) => {
                 setAlbum(data);
+                if (data.status == "error") {
+                    return;
+                }
                 if (props.user.status == "loggedin" && data.likes.includes(props.user.userInfo.username)) {
                     changeLike("Liked ❤️");
                 } else {
@@ -137,6 +140,17 @@ export default function Album(props) {
             .catch((err) => console.log(err))
     }
 
+    if (album.status == "error") {
+        return(
+            <>
+            <div className="profile-album">
+                <h1 className="page-heading">This album doesn't exist!</h1>
+            </div>
+            </>
+            )
+    }
+
+    if (album != undefined) {
     return (
         <div className='row container py-3'>
             <div>
@@ -208,5 +222,5 @@ export default function Album(props) {
                 }
             </div>
         </div>
-    )
+    )}
 }

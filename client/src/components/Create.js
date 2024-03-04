@@ -174,8 +174,8 @@ export default function Create(props) {
                                 <input ref={aRef} type="file" className="form-control-file" onChange={photosChange} accept="image/*" multiple required />
                             </div>
                             <div className="mb-3">
+                                <input className="form-check-input me-1" type="checkbox" onChange={isPrivateChange} value={isPrivate} />
                                 <label htmlFor="isPrivate" className="form-label">Should this album be private?</label>
-                                <input type="checkbox" onChange={isPrivateChange} value={isPrivate} />
                             </div>
                             <button type="submit" className="btn btn-dark">Submit</button>
                             <p className="alert">{alert}</p>
