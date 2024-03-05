@@ -6,6 +6,7 @@ import Create from './components/Create';
 import Album from './components/Album';
 import Profile from './components/Profile';
 import EditProfile from './components/EditProfile'
+import About from "./components/About";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from "react";
@@ -42,6 +43,7 @@ function App() {
         <Route path="/album/:id" element={<Album user={user}/>}/>
         <Route path="/profile/:id" element={<Profile user={user}/>}/>
         <Route path="/edit" element={<EditProfile user={user}/>}/>
+        <Route path="/about" element={<About user={user}/>}/>
       </Routes>
     </>
   );

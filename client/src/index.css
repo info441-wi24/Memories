@@ -25,6 +25,7 @@ h1 {
 .imgPreview {
   max-width: 400px;
   max-height: 400px;
+  object-fit: cover; /* so profile doesnt squish */
 }
 
 /* .img-test {
@@ -53,7 +54,7 @@ h1 {
   flex-basis: 30%;
   background-color: #a2959554;
   border-radius: 20px;
-  max-height: 600px;
+  height: 100%;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
@@ -324,6 +325,12 @@ margin: 0;
   margin-left: 1rem
 }
 
+.create-album {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5rem;
+}
+
 /* album cards */
 
 .card {
@@ -337,4 +344,51 @@ padding: 0;
 
 .alert {
 padding-left: 0;
+}
+
+/* about */
+.about-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 80px;
+  padding: 0 50px;
+  justify-content: center; 
+}
+
+.about-header p {
+  max-width: 600px; 
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; 
+}
+
+.team-member {
+  text-align: center;
+  margin: 20px;
+  max-width: 300px; 
+}
+
+.team-member-image {
+  width: 200px; 
+  height: 200px;
+  object-fit: cover; 
+}
+
+.team-member-info {
+  margin-top: 10px;
+}
+
+h3, .role {
+  margin: 5px 0; 
+}
+
+@media (max-width: 600px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
 }
