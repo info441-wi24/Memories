@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import HomeCard from "./HomeCard";
-import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import { useRef } from 'react';
-// import Warper from './Warper';
 
 
 export default function Profile(props) {

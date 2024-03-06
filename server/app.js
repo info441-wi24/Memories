@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import models from './models.js';
 import sessions from 'express-session'
+import dotenv from 'dotenv'
 
 import usersRouter from './routes/users.js';
 import apiRouter from './routes/api.js';
@@ -13,12 +14,14 @@ import { dirname } from 'path';
 
 import WebAppAuthProvider from 'msal-node-wrapper'
 
+dotenv.config();
+
 const authConfig = {
 	auth: {
-		clientId: "a89e730b-bb1a-4200-9de8-e4948d22ae7d",
-        authority: "https://login.microsoftonline.com/f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
-        clientSecret: "_uE8Q~wW9jLorrtpKaH-f660gLdAEpe9sPwRBa.7",
-        redirectUri: "/redirect"//"http://localhost:3000/redirect"
+		clientId: process.env.CLIENT_ID,
+        authority: process.env.AUTHORITY,
+        clientSecret: process.env.CLIENT_SECRET,
+        redirectUri: "/redirect"
 	},
     system: {
         loggerOptions: {
@@ -46,7 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(sessions({
-    secret: "this is a secret key: aeraewojroajerojajewor",
+    secret: process.env.SESSION_SECRET,
     saveUninitialized: true,
     cookie: {maxAge: oneDay},
     resave: false
@@ -67,7 +70,7 @@ app.get(
 	'/signin',
 	(req, res, next) => {
 		return req.authContext.login({
-			postLoginRedirectUri: "http://localhost:3000/", // redirect here after login... change to "https://yourmemories.azurewebsites.net/" later
+			postLoginRedirectUri: "http://localhost:3000/",
 		})
         (req, res, next);
 	}
@@ -77,7 +80,7 @@ app.get(
 	'/signout',
 	(req, res, next) => {
 		return req.authContext.logout({
-			postLogoutRedirectUri: "http://localhost:3000/", // redirect here after logout... change to "https://yourmemories.azurewebsites.net/" later
+			postLogoutRedirectUri: "http://localhost:3000/",
 		})(req, res, next);
 	}
 );

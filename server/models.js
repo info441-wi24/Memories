@@ -1,8 +1,11 @@
 import mongoose from "mongoose";
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 let models = {}
 
-await mongoose.connect("mongodb+srv://jnguyen860:12345678a@memories.hqiftv7.mongodb.net/memories");
+await mongoose.connect(process.env.MONGODB_CONNECTION);
   
 
 const userSchema = mongoose.Schema({

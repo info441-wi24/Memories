@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate, redirect, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Create from './components/Create';
@@ -7,7 +7,6 @@ import Album from './components/Album';
 import Profile from './components/Profile';
 import EditProfile from './components/EditProfile'
 import About from "./components/About";
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from "react";
 
