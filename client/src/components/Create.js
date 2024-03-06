@@ -195,10 +195,6 @@ export default function Create(props) {
                     </div>
                 </div>
             </div>
-            {/* <div>
-                
-            </div> */}
-
         </div>
     )
 }

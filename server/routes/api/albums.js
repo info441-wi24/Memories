@@ -3,15 +3,10 @@ var router = express.Router();
 
 import multer from 'multer';
 import MulterAzureStorage from 'multer-azure-storage';
-import { BlobServiceClient } from '@azure/storage-blob';
-import { model } from 'mongoose';
 
 // Set up Azure Blob Storage
-const connectionString = 'DefaultEndpointsProtocol=https;AccountName=info441photoalbum;AccountKey=I4btGGARHrjyqEIzQk2jREkKn854kdsTtjzCIzCs9Az8T4iXtWhwUsEXU8tsEgQNt4/xeqo8voZc+AStlwxsYA==;EndpointSuffix=core.windows.net';
+const connectionString = process.env.AZURE_BLOB_STORAGE;
 const containerName = 'images';
-
-// const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString); //connects to the storage
-// const containerClient = blobServiceClient.getContainerClient(containerName); //connects to the blob container
 
 const upload = multer({
   storage: new MulterAzureStorage({
@@ -86,7 +81,6 @@ router.get("/view", async (req, res) => {
   try {
     if (albumID) {
       let album = await req.models.Album.findById(albumID);
-      // !album.isPrivate || album.username === req.session.account.username || album.invitedUsers.includes(req.session.account.username)
       if(album && checkIfAlbumShouldBeShown(album, username)){
         res.json(album).status(201);
       }
@@ -99,7 +93,6 @@ router.get("/view", async (req, res) => {
       for (let album of allAlbums) {
 
         if (album.albumName.toLowerCase().includes(albumSearch.toLowerCase()) || ("@" + album.username.toLowerCase()).includes(albumSearch.toLowerCase())
-          // && checkIfAlbumShouldBeShown(album, req.session.account.username)
         ) {
           albumsMatch.push(album);
         }
@@ -176,7 +169,7 @@ router.post('/unlike', async (req, res) => {
     try {
       await req.models.Album.updateOne(
         { _id: albumID, likes: req.session.account.username },
-        { $pull: { likes: req.session.account.username } } //change to req.session.account.username later
+        { $pull: { likes: req.session.account.username } }
       );
       res.json({ status: "success" }).status(201);
     } catch (error) {

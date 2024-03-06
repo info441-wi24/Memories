@@ -6,7 +6,6 @@ import models from './models.js';
 import sessions from 'express-session'
 import dotenv from 'dotenv'
 
-import usersRouter from './routes/users.js';
 import apiRouter from './routes/api.js';
 
 import { fileURLToPath } from 'url';

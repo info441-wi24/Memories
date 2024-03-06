@@ -150,7 +150,6 @@ export default function Profile(props) {
                             }} />
                             <h4 className="mt-5">Edit Profile Picture: </h4>
                             <div className="mb-3">
-                                {/* <label htmlFor="fileUpload" className="form-label"><strong>Upload Profile</strong></label> */}
                                 <div className="mb-3">
                                     <input ref={aRef} type="file" title=" " className="custom-file-input" onChange={photosChange} accept="image/*" />
                                 </div>

@@ -108,18 +108,7 @@ export default function Profile(props) {
                         </form>
                     </div>
                 </div>
-                {/* <div className="col-8"> */}
-
-                {/* </div> */}
             </div>
-            {/* <div>
-            
-        </div> */}
-
         </div>
-
-
-
-
     );
 }

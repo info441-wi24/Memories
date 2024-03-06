@@ -3,7 +3,6 @@ import TeamMember from './TeamMember';
 function About() {
   const teamMembers = [
 
-    // include your name
     { name: 'James Nguyen', title: 'Back-end/Front-end Developer', imageSrc: 'https://info441photoalbum.blob.core.windows.net/images/IMG_39251.jpg' },
     { name: 'Yan Remes', title: 'Back-end/Front-end Developer', imageSrc: 'https://info441photoalbum.blob.core.windows.net/images/Yan_Remes.jpg' },
     { name: 'Sunghee Park', title: 'Back-end/Front-end Developer', imageSrc: 'https://info441photoalbum.blob.core.windows.net/images/IMG_3985.jpg' },

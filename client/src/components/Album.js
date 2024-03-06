@@ -118,7 +118,7 @@ export default function Album(props) {
                 .then((data) => {
                     let tempComments = data.toReversed().map((comment, index) => {
                         return (<Comment key={index} comment={comment} />)
-                    }); //this is probably not a good idea lol! also probably should just change the array rather than refetching lol
+                    });
                     setComments(tempComments);
                     setComment("");
                 })

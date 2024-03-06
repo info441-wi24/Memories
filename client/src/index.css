@@ -28,17 +28,11 @@ h1 {
   object-fit: cover; /* so profile doesnt squish */
 }
 
-/* .img-test {
-  max-width: 100%;
-  max-height: 50px;
-} */
 
 .card-img-top {
   max-width: 100%;
   max-height: 300px;
   object-fit: cover;
-  /* max-width: 100%;
-  max-height: 200px; */
 }
 
 .card-title {
@@ -178,10 +172,6 @@ input[type='file'] {
 
 /* profile Page */
 
-/* footer,
-.page-header{
-    text-align: center;
-} */
 
 .profile-album .page-heading {
   text-align: center;
@@ -190,8 +180,6 @@ input[type='file'] {
 
 .profile-album .container {
   display: flex;
-  /* or inline-flex */
-  /* border: 3px solid green; */
 }
 
 .profile {
@@ -232,7 +220,6 @@ input[type='file'] {
   text-align: center;
   margin: 1.5rem;
   margin-bottom: 0;
-  /* border: 3px solid green; */
 }
 
 .biography {
@@ -245,7 +232,6 @@ input[type='file'] {
 
 .bio-input {
 margin: 0 1rem 1rem 0; 
-/* max-height: 4rem; */
 }
 
 .bio-container {
@@ -288,11 +274,6 @@ margin: 0;
 .user, .card-user {
   color: rgb(167, 2, 2);
 }
-/* .albums {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 2rem;
-} */
 
 .album-heading {
   display: flex;

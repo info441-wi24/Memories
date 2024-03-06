@@ -5,7 +5,6 @@ import Tag from "./Tag";
 
 
 export default function HomeCard(props) {
-    // const [user, setUser] = useState();
     const [likeCounter, setLikesCounter] = useState(props.album.likes.length);
     const [like, changeLike] = useState("");
 
@@ -50,7 +49,6 @@ export default function HomeCard(props) {
         <div className="card img-test">
             <img src={props.album.photos[0]} className="card-img-top" alt="album thumbnail"/>
                 <div className="card-body">
-                    {/* {props.user != undefined && props.user.status == "loggedin" && <button className="btn btn-like like" onClick={onChangeLike}>{like}</button>} */}
                     <h5 className="card-title">{props.album.albumName}</h5>
                     <Link className="text-primary text-decoration-none" to={"/profile/" + props.album.username.split("@")[0]}>
                         <p className="card-subtitle card-user">{"@" + props.album.username.split("@")[0]}</p>
